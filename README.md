@@ -23,6 +23,7 @@ Spotly is an Android application designed to help users discover unique spots an
 - Offers Integration users will automatically see if there are active offers when booking or ordering.
 - Payment Gateway online payment options for reservations and orders, in addition to cash on delivery or in-store payment.
 
+> Spotly isn’t just a discovery tool it’s a personalized guide that combines exploration, convenience, and savings all in one app.
 
 <div align="center">
   <h3>Home Page</h3>
@@ -30,5 +31,5 @@ Spotly is an Android application designed to help users discover unique spots an
 <br/>
 </div>
 
->
-> Spotly isn’t just a discovery tool it’s a personalized guide that combines exploration, convenience, and savings all in one app.
+
+
