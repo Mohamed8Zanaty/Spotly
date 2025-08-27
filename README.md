@@ -19,7 +19,7 @@ Spotly is an Android application designed to help users discover unique spots an
     - Take away (pick it up themselves).
     - Delivery (delivered to their address).
     - Dine-in (order in advance and have it ready when they arrive).
-    - 
+      
 - Offers Integration users will automatically see if there are active offers when booking or ordering.
 - Payment Gateway online payment options for reservations and orders, in addition to cash on delivery or in-store payment.
 
