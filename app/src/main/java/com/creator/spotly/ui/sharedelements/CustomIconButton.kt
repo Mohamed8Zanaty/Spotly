@@ -28,7 +28,7 @@ fun CustomIconButton(
         shape = RoundedCornerShape(roundedValue.dp),
         modifier = Modifier.size(size.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.LightGray,
+            containerColor = Color.LightGray.copy(alpha = 0.2f),
             contentColor = Color.Black
         ),
         contentPadding = PaddingValues(0.dp)
