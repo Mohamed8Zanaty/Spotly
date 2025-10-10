@@ -32,10 +32,10 @@ fun LoginScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // النصف العلوي (الخلفية المموجة)
+
         Box(
             modifier = Modifier
-                .weight(1f) // نص الشاشة
+                .weight(1f)
                 .fillMaxWidth()
         ) {
             Canvas(
@@ -55,7 +55,7 @@ fun LoginScreen() {
                 drawPath(path, color = Color(0xFFFF5722))
             }
 
-            // العنوان جوه الجزء العلوي
+
             Column(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -67,10 +67,10 @@ fun LoginScreen() {
             }
         }
 
-        // النصف السفلي (الفورم + الزرار)
+
         Column(
             modifier = Modifier
-                .weight(1f) // النص التاني من الشاشة
+                .weight(1f)
                 .fillMaxWidth()
                 .padding(horizontal = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
