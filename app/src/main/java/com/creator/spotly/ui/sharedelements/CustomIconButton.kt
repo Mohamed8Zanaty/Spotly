@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -39,6 +40,32 @@ fun CustomIconButton(
             modifier = Modifier.size(24.dp).align(Alignment.CenterVertically),
 
         )
+    }
+}
+
+@Composable
+fun CustomIconButton(
+    onClick : () -> Unit,
+    roundedValue: Int,
+    size: Int,
+    icon: Int
+) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(roundedValue.dp),
+        modifier = Modifier.size(size.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.LightGray.copy(alpha = 0.2f),
+            contentColor = Color.Black
+        ),
+        contentPadding = PaddingValues(0.dp)
+    ) {
+        Icon(
+            painterResource(icon),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp).align(Alignment.CenterVertically),
+
+            )
     }
 }
 
