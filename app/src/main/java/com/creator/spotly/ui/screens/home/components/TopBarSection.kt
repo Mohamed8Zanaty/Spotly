@@ -60,7 +60,7 @@ fun TopBarSection(
             ) {
                 // we should change this to viewmodel
                 Image(
-                    painter = painterResource(R.drawable.avatar),
+                    painter = painterResource(R.drawable.avatar2),
                     contentDescription = null,
                     modifier = Modifier.size(37.dp)
                 )

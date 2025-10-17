@@ -1,9 +1,5 @@
-package com.example.popularplacesscreen
+package com.creator.spotly.ui.screens.popularplaces
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +28,6 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.popularplacesscreen.ui.theme.PopularPlacesScreenTheme
+import com.creator.spotly.R
+import com.creator.spotly.ui.screens.chat.TopBar
 
 data class Place(
     val name: String,
@@ -55,25 +51,10 @@ data class Place(
     val imageRes: Int
 )
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            PopularPlacesScreenTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding)) {
-                        PlacesScreen()
-                    }
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
-fun TopBar(){
+fun PopularTopBar(){
 
     Row (
         modifier = Modifier

@@ -1,21 +1,32 @@
 package com.example.detailsscreen
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.*
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,26 +38,11 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.detailsscreen.ui.theme.DetailsScreenTheme
+import com.creator.spotly.R
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            DetailsScreenTheme {
-                Surface(modifier = Modifier
-                    .fillMaxSize(),
-                    color = Color.White
-                ) {
-                    DetailsScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun DetailsScreen() {
@@ -60,13 +56,13 @@ fun DetailsScreen() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(380.dp)
+                .height(500.dp)
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(WindowInsets.statusBars.asPaddingValues())
+                .statusBarsPadding()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -135,7 +131,7 @@ fun DetailsScreen() {
                     }
 
                     Image(
-                        painter = painterResource(id = R.drawable.avatar), // replace
+                        painter = painterResource(id = R.drawable.avatar2), // replace
                         contentDescription = null,
                         modifier = Modifier
                             .size(50.dp)
@@ -240,10 +236,10 @@ fun DetailsScreen() {
         }
     }
 }
-
+@Preview
 @Composable
 fun DetailsScreenPreview() {
-    DetailsScreenTheme {
-        DetailsScreen()
-    }
+
+    DetailsScreen()
+
 }
