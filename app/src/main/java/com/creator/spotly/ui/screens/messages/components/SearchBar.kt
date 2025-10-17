@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
@@ -29,7 +30,7 @@ fun SearchBar(
     onSearchQueryChanged: (String) -> Unit = {},
 ) {
     var searchQuery by remember { mutableStateOf("") }
-    TextField(
+    OutlinedTextField(
         value = searchQuery,
         onValueChange = {
             searchQuery = it

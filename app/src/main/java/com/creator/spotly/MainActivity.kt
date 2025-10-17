@@ -6,17 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.creator.spotly.ui.screens.notification_screen.NotificationScreen
-import com.creator.spotly.ui.screens.startup_screen.WelcomeScreen
+import com.creator.spotly.ui.screens.notifications.NotificationScreen
 import com.creator.spotly.ui.theme.SpotlyTheme
 
 class MainActivity : ComponentActivity() {
