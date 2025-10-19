@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.creator.spotly.ui.screens.ScheduleScreen
 import com.creator.spotly.ui.screens.SearchScreen
 import com.creator.spotly.ui.theme.SpotlyTheme
 
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
 //                }
             }
 
-            SearchScreen()
+
         }
     }
 }
