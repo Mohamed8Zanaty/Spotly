@@ -5,12 +5,57 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.creator.spotly.domain.model.NotificationData
 import com.creator.spotly.ui.screens.notifications.component.NotificationList
 import com.creator.spotly.ui.screens.notifications.component.NotificationTabs
 import com.creator.spotly.ui.screens.notifications.component.NotificationTopBar
 
 @Composable
-fun NotificationScreen(modifier: Modifier = Modifier) {
+fun NotificationScreen(
+    modifier: Modifier = Modifier,
+    notifications: List<NotificationData> = emptyList(),
+    onBack: () -> Unit = {},
+    onClearAll: () -> Unit = {},
+    onNotificationClick: (NotificationData) -> Unit = {}
+) {
+
+    NotificationsContent(
+        modifier = modifier,
+        notifications = notifications,
+        onBack = onBack,
+        onClearAll = onClearAll,
+        onNotificationClick = onNotificationClick
+    )
+    
+}
+
+@Composable
+fun NotificationsContent(
+    modifier: Modifier = Modifier,
+    notifications: List<NotificationData> = emptyList(),
+    onBack: () -> Unit = {},
+    onClearAll: () -> Unit = {},
+    onNotificationClick: (NotificationData) -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .then(modifier)
+    ) {
+        NotificationTopBar(
+            onBack = onBack,
+            onClearAll = onClearAll,
+            modifier = Modifier
+        )
+        NotificationTabs()
+        NotificationList(notifications = notifications)
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun NotificationScreenPreview() {
     val notifications = listOf(
         NotificationData(
             imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm6rA9kd9jV8ZeNIchdz0ClkdTOob8dE9jWA&s",
@@ -31,20 +76,7 @@ fun NotificationScreen(modifier: Modifier = Modifier) {
             time = "Tue, 10:56pm"
         )
     )
-
-    Column(modifier = Modifier.fillMaxSize().then(modifier)) {
-        NotificationTopBar(
-            onBack = {}, onClearAll = {},
-            modifier = Modifier
-        )
-        NotificationTabs()
-        NotificationList(notifications = notifications)
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun NotificationScreenPreview() {
-    NotificationScreen()
+    NotificationScreen(
+        notifications = notifications
+    )
 }

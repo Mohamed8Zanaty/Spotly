@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.search
+package com.creator.spotly.ui.screens.search.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

@@ -27,20 +27,37 @@ val sample = List(5) { i ->
         extraCount = 50
     )
 }
-@Composable
-fun HomeScreen() {
-    Scaffold(
-        Modifier.fillMaxSize(),
 
+@Composable
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    onPlaceClick: (String) -> Unit = {},
+    onNotificationsButtonClick: () -> Unit = {},
+) {
+    HomeContent(
+        modifier = modifier,
+        contentPadding = contentPadding,
+        onPlaceClick = onPlaceClick,
+        onNotificationsButtonClick = onNotificationsButtonClick
+    )
+}
+
+@Composable
+fun HomeContent(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
+    onPlaceClick: (placeId: String) -> Unit = {},
+    onNotificationsButtonClick: () -> Unit = {},
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(contentPadding)
                 .padding(horizontal = 12.dp)
         ) {
             TopBarSection(
-                {}
+                notificationsIconHandler = onNotificationsButtonClick
             ) { }
             Spacer(Modifier.height(5.dp))
             TitleSection(
@@ -50,9 +67,8 @@ fun HomeScreen() {
             Spacer(Modifier.height(12.dp))
             BestDestinationTitle { }
             Spacer(Modifier.height(12.dp))
-            TravelCardRow(sample)
+            TravelCardRow(sample, onItemClick = onPlaceClick)
         }
-    }
 }
 
 @Preview(showSystemUi = true)

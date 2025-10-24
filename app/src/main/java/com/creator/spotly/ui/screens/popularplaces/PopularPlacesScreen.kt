@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -41,7 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.creator.spotly.R
-import com.creator.spotly.ui.screens.chat.TopBar
+
 
 data class Place(
     val name: String,
@@ -52,18 +52,17 @@ data class Place(
 )
 
 
-
 @Composable
-fun PopularTopBar(){
+fun PopularTopBar() {
 
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.White)
             .padding(WindowInsets.statusBars.asPaddingValues())
-            .padding(16.dp)
-        , verticalAlignment = Alignment.CenterVertically
-        , horizontalArrangement = Arrangement.SpaceAround
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         IconButton(
             onClick = {},
@@ -73,7 +72,7 @@ fun PopularTopBar(){
 
         ) {
             Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 contentDescription = "Back to Messeges"
             )
         }
@@ -85,7 +84,7 @@ fun PopularTopBar(){
         )
 
         Spacer(modifier = Modifier.size(42.dp))
-     }
+    }
 }
 
 @Composable
@@ -197,7 +196,7 @@ fun PlacesScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        TopBar()
+        PopularTopBar()
 
         Text(
             text = "All Popular Places",
@@ -220,6 +219,6 @@ fun PlacesScreen() {
 
 @Preview
 @Composable
-fun screenPreview(){
+fun screenPreview() {
     PlacesScreen()
 }

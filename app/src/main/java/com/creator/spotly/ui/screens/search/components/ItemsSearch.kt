@@ -1,9 +1,6 @@
-package com.creator.spotly.ui.screens.search
-
-import com.creator.spotly.R
+package com.creator.spotly.ui.screens.search.components
 
 import androidx.compose.foundation.Image
-
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.creator.spotly.R
 import com.creator.spotly.ui.theme.SpotlyTheme
 
 @Composable
@@ -51,13 +49,15 @@ fun ItemSearch() {
             ) {
                 Box(
                     modifier = Modifier
-                    .height(260.dp)
-                    .padding(2.dp)
-                    .fillMaxWidth(),
+                        .height(260.dp)
+                        .padding(2.dp)
+                        .fillMaxWidth(),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    Column(modifier = Modifier
-                        .padding(10.dp)){
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp)
+                    ) {
                         Image(
 
                             painter = painterResource(id = R.drawable.alex),
@@ -67,12 +67,13 @@ fun ItemSearch() {
                                 .clip(RoundedCornerShape(8.dp))
                                 .size(150.dp),
 
-                        )
+                            )
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text(text = "Alexandria Library",
+                        Text(
+                            text = "Alexandria Library",
                             fontWeight = FontWeight.Bold
-                            )
+                        )
                         Row {
                             Icon(
                                 imageVector = Icons.Default.Place,
@@ -80,15 +81,18 @@ fun ItemSearch() {
                                 tint = Color.Gray,
                                 modifier = Modifier.size(20.dp)
                             )
-                            Text(text = "Alexandria",
+                            Text(
+                                text = "Alexandria",
                                 color = Color.Gray
                             )
                         }
                         Row {
-                            Text(text = "20$/",
+                            Text(
+                                text = "20$/",
                                 color = Color(0xffFF6421)
                             )
-                            Text(text = "Person",
+                            Text(
+                                text = "Person",
                                 color = Color.Gray
                             )
                         }
@@ -99,10 +103,11 @@ fun ItemSearch() {
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewMain() {
-    SpotlyTheme  {
+    SpotlyTheme {
         ItemSearch()
     }
 }

@@ -22,38 +22,43 @@ import com.creator.spotly.ui.screens.favorite.component.FavoriteTopBar
 
 @Composable
 fun FavoritePlacesScreen(places: List<Place>, onBackClick: () -> Unit) {
-  Scaffold(
-      containerColor = Color.White,
-      topBar = { FavoriteTopBar(onBackClick) },
-      contentWindowInsets = WindowInsets.safeDrawing,
-  ) { paddingValues
-    ->
-    Column(modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)) {
-      Text(
-          text = "Favorite Places",
-          fontSize = 22.sp,
-          fontWeight = FontWeight.Bold,
-          color = Color.Black,
-      )
+    Scaffold(
+        containerColor = Color.White,
+        topBar = { FavoriteTopBar(onBackClick) },
+        contentWindowInsets = WindowInsets.safeDrawing,
+    ) { paddingValues
+        ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Favorite Places",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            )
 
-      Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-      FavoritePlacesGrid(places)
+            FavoritePlacesGrid(places)
+        }
     }
-  }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun FavoritePlacesPreview() {
-  val samplePlaces =
-      listOf(
-          Place("Niladri Reservoir", "Tekergat, Sunamgnj", "https://picsum.photos/300/200?1"),
-          Place("Casa Las Tirtugas", "Av Damero, Mexico", "https://picsum.photos/300/200?2"),
-          Place("Aonang Villa Resort", "Bastola, Islumpur", "https://picsum.photos/300/200?3"),
-          Place("Rangauti Resort", "Sylhet, Airport Road", "https://picsum.photos/300/200?4"),
-          Place("Kachura Resort", "Vellima, Island", "https://picsum.photos/300/200?5"),
-          Place("Shakardu Resort", "Shakartu, Pakistan", "https://picsum.photos/300/200?6"),
-      )
-  FavoritePlacesScreen(places = samplePlaces, onBackClick = {})
+    val samplePlaces =
+        listOf(
+            Place("Niladri Reservoir", "Tekergat, Sunamgnj", "https://picsum.photos/300/200?1"),
+            Place("Casa Las Tirtugas", "Av Damero, Mexico", "https://picsum.photos/300/200?2"),
+            Place("Aonang Villa Resort", "Bastola, Islumpur", "https://picsum.photos/300/200?3"),
+            Place("Rangauti Resort", "Sylhet, Airport Road", "https://picsum.photos/300/200?4"),
+            Place("Kachura Resort", "Vellima, Island", "https://picsum.photos/300/200?5"),
+            Place("Shakardu Resort", "Shakartu, Pakistan", "https://picsum.photos/300/200?6"),
+        )
+    FavoritePlacesScreen(places = samplePlaces, onBackClick = {})
 }

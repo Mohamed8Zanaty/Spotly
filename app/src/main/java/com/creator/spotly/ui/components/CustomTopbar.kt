@@ -4,47 +4,58 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.creator.spotly.ui.theme.BUTTON_SIZE
 import com.creator.spotly.ui.theme.CustomFontFamily
 import com.creator.spotly.ui.theme.ROUNDED_BUTTON_VALUE
+import com.creator.spotly.ui.theme.TOPBAR_PADDING_TOP
 
 @Composable
 fun CustomTopbar(
     backButtonHandler : () -> Unit,
+    title: String,
     item :  @Composable () -> Unit = { Box{} },
-    title: String
+    backContainerColor: Color = Color.LightGray.copy(alpha = 0.2f),
+    backContentColor: Color = Color.Black,
+    titleColor: Color = Color.Black,
+    titleFontSize: Int = 24
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .padding(top = TOPBAR_PADDING_TOP.dp)
         ,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceAround,
     ) {
         // Back Button
         CustomIconButton(
             onClick = backButtonHandler,
-            roundedValue = ROUNDED_BUTTON_VALUE,
-            size = BUTTON_SIZE,
-            icon = Icons.Default.KeyboardArrowLeft
+            icon = Icons.Default.ArrowBackIosNew,
+            containerColor = backContainerColor,
+            contentColor = backContentColor
         )
+        // Title
         Text(
             title,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 18.sp,
-            fontFamily = CustomFontFamily
+            fontSize = titleFontSize.sp,
+            fontFamily = CustomFontFamily,
+            color = titleColor
         )
         item()
     }
@@ -60,8 +71,6 @@ private fun CustomTopbarPreview() {
         item = {
             CustomIconButton(
                 onClick = {},
-                roundedValue = ROUNDED_BUTTON_VALUE,
-                size = BUTTON_SIZE,
                 icon = Icons.Default.MoreVert
             )
         }

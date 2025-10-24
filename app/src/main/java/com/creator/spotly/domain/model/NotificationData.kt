@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.notifications
+package com.creator.spotly.domain.model
 
 data class NotificationData(
     val imageUrl: String,

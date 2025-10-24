@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ContinueButton(modifier: Modifier,onClick: () -> Unit) {
+fun ContinueButton(modifier: Modifier, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,8 +43,7 @@ fun ContinueButton(modifier: Modifier,onClick: () -> Unit) {
                     .clip(CircleShape)
                     .background(Color(0xFFFF5B00))
                     .padding(10.dp)
-                    .clickable { onClick() }
-                ,
+                    .clickable { onClick() },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

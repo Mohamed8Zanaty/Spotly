@@ -32,8 +32,7 @@ fun TopBarSection(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 17.5.dp)
-        ,
+            .padding(horizontal = 17.5.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -68,7 +67,7 @@ fun TopBarSection(
                 Text(
                     text = "Imane",
 
-                )
+                    )
             }
         }
     }
@@ -81,5 +80,5 @@ private fun TopBArSectionPreview() {
         notificationsIconHandler = {},
         profileIconHandler = {},
 
-    )
+        )
 }

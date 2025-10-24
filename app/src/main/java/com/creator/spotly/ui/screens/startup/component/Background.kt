@@ -12,24 +12,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview(showBackground = true,showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun TopBackground(modifier: Modifier = Modifier) {
-  Box(
-      modifier =
-          Modifier
-              .fillMaxWidth()
-              .height(400.dp)
-              .background(
-                  brush =
-                      Brush.verticalGradient(
-                          colors =
-                              listOf(
-                                  Color(0xFFFF5B00), // orange tone
-                                  Color(0xFFFF6E00),
-                              )
-                      ),
-                  shape = RoundedCornerShape(bottomStart = 100.dp),
-              )
-  )
+    Box(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+                .background(
+                    brush =
+                        Brush.verticalGradient(
+                            colors =
+                                listOf(
+                                    Color(0xFFFF5B00), // orange tone
+                                    Color(0xFFFF6E00),
+                                )
+                        ),
+                    shape = RoundedCornerShape(bottomStart = 100.dp),
+                )
+    )
 }

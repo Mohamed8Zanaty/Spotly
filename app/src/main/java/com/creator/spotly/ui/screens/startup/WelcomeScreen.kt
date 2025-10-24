@@ -13,15 +13,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.creator.spotly.ui.components.Curve
 import com.creator.spotly.ui.screens.startup.component.ContinueButton
-import com.creator.spotly.ui.screens.startup.component.TopBackground
 import com.creator.spotly.ui.screens.startup.component.WelcomeTextSection
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    continueButtonOnClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-        ) {
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
@@ -35,9 +36,7 @@ fun WelcomeScreen() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             WelcomeTextSection()
-            ContinueButton(modifier = Modifier,onClick = {
-               print("hallo")
-            })
+            ContinueButton(modifier = Modifier, onClick = continueButtonOnClick)
         }
     }
 }

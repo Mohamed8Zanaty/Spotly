@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
-import com.creator.spotly.ui.screens.notifications.NotificationScreen
+import com.creator.spotly.ui.navigation.NavigationRoot
 import com.creator.spotly.ui.theme.SpotlyTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,9 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SpotlyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NotificationScreen(modifier = Modifier.padding(innerPadding))
-                }
+                NavigationRoot()
             }
         }
     }

@@ -11,18 +11,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.creator.spotly.ui.screens.search.components.AppbarSearch
+import com.creator.spotly.ui.screens.search.components.ItemSearch
+import com.creator.spotly.ui.screens.search.components.SearchBar
 import com.creator.spotly.ui.theme.SpotlyTheme
 
 
 @Composable
-fun SearchScreen(){
+fun SearchScreen(
+    onBack: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    SearchContent(
+        onBack = onBack,
+        onCancel = onCancel
+    )
+}
+
+@Composable
+fun SearchContent(
+        onBack: () -> Unit = {},
+        onCancel: () -> Unit = {}
+    ) {
     Column(
         modifier = Modifier.padding(16.dp),
-       // verticalArrangement = Arrangement.spacedBy(8.dp) // space between items
+        // verticalArrangement = Arrangement.spacedBy(8.dp) // space between items
     ) {
         AppbarSearch(
-            backButtonHandler = {},
-            cancelHandler = {}
+            backButtonHandler = onBack,
+            cancelHandler = onCancel
         )
         Spacer(modifier = Modifier.height(15.dp))
         SearchBar()
@@ -32,13 +49,13 @@ fun SearchScreen(){
         ItemSearch()
 
     }
-
+    
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainScreen() {
-    SpotlyTheme  {
+    SpotlyTheme {
         SearchScreen()
     }
 }

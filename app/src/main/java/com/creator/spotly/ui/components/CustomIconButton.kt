@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,21 +17,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.creator.spotly.ui.theme.BUTTON_SIZE
+import com.creator.spotly.ui.theme.ROUNDED_BUTTON_VALUE
 
 @Composable
 fun CustomIconButton(
     onClick : () -> Unit,
-    roundedValue: Int,
-    size: Int,
-    icon: ImageVector
+    icon: ImageVector,
+    roundedValue: Int = ROUNDED_BUTTON_VALUE,
+    buttonSize: Int = BUTTON_SIZE,
+    containerColor: Color = Color.LightGray.copy(alpha = 0.2f),
+    contentColor: Color = Color.Black
 ) {
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(roundedValue.dp),
-        modifier = Modifier.size(size.dp),
+        modifier = Modifier.size(buttonSize.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.LightGray.copy(alpha = 0.2f),
-            contentColor = Color.Black
+            containerColor = containerColor,
+            contentColor = contentColor
         ),
         contentPadding = PaddingValues(0.dp)
     ) {
@@ -74,8 +79,6 @@ fun CustomIconButton(
 private fun CustomIconButtonPreview() {
     CustomIconButton(
         onClick = {},
-        size = 44,
-        roundedValue = 25,
-        icon = Icons.Default.KeyboardArrowLeft
+        icon = Icons.Default.ArrowBackIosNew
     )
 }

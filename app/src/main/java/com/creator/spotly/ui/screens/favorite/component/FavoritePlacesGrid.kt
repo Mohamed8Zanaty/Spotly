@@ -14,14 +14,16 @@ import com.creator.spotly.domain.model.Place
 
 @Composable
 fun FavoritePlacesGrid(places: List<Place>) {
-  LazyVerticalGrid(
-      columns = GridCells.Fixed(2),
-      verticalArrangement = Arrangement.spacedBy(16.dp),
-      horizontalArrangement = Arrangement.spacedBy(16.dp),
-      modifier = Modifier.fillMaxSize().padding(12.dp),
-  ) {
-    items(places) { place -> FavoritePlaceCard(place) }
-  }
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp),
+    ) {
+        items(places) { place -> FavoritePlaceCard(place) }
+    }
 }
 
 @Preview(showSystemUi = true)

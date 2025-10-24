@@ -39,71 +39,65 @@ import com.creator.spotly.ui.theme.CustomFontFamily
 import com.creator.spotly.ui.theme.OrangeRed
 
 
-enum class SelectedButton {
+enum class Tab {
     HOME,
     CALENDER,
+    SEARCH,
     MESSAGES,
     PROFILE
 }
 
 
 @Composable
-fun BottomNavBar() {
-    var selected by remember { mutableStateOf(SelectedButton.HOME) }
+fun BottomNavBar(
+    selected: Tab,
+    onTabSelected: (Tab) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     Box(
-        Modifier.fillMaxWidth()
-            .height(100.dp)
-
-        ,
-        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        contentAlignment = Alignment.Center
 
     ) {
 
     Row(
-        Modifier
-            .fillMaxWidth(),
+        Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         CustomButton(
-            onClick = {
-                selected = SelectedButton.HOME
-            },
+            onClick = { onTabSelected(Tab.HOME) },
             selected = selected,
-            targetSelected = SelectedButton.HOME,
+            targetSelected = Tab.HOME,
             icon = Icons.Default.Home,
             text = "Home"
         )
         CustomButton(
-            onClick = {
-                selected = SelectedButton.CALENDER
-            },
+            onClick = { onTabSelected(Tab.CALENDER) },
             selected = selected,
-            targetSelected = SelectedButton.CALENDER,
+            targetSelected = Tab.CALENDER,
             icon = Icons.Default.DateRange,
             text = "Calender"
         )
         FAB(
-            onClick = {},
+            onClick = { onTabSelected(Tab.SEARCH) },
            icon = Icons.Default.Search
 
         )
         CustomButton(
-            onClick = {
-                selected = SelectedButton.MESSAGES
-            },
+            onClick = { onTabSelected(Tab.MESSAGES) },
             selected = selected,
-            targetSelected = SelectedButton.MESSAGES,
+            targetSelected = Tab.MESSAGES,
             icon = Icons.Default.MailOutline,
             text = "Messages"
         )
         CustomButton(
-            onClick = {
-                selected = SelectedButton.PROFILE
-            },
+            onClick = { onTabSelected(Tab.PROFILE) },
             selected = selected,
-            targetSelected = SelectedButton.PROFILE,
+            targetSelected = Tab.PROFILE,
             icon = Icons.Default.Person,
             text = "Profile"
         )
@@ -111,17 +105,13 @@ fun BottomNavBar() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun BottomNavBarPreview() {
-    BottomNavBar()
-}
+
 
 @Composable
 fun CustomButton(
     onClick: () -> Unit,
-    selected: SelectedButton,
-    targetSelected: SelectedButton,
+    selected: Tab,
+    targetSelected: Tab,
     icon: ImageVector,
     text: String
 ) {

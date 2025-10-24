@@ -21,8 +21,7 @@ fun Title() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-        ,
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

@@ -39,7 +39,7 @@ fun TitleSection(
         text = customText,
         fontFamily = CustomFontFamily,
 
-    )
+        )
 }
 
 @Preview(showBackground = true)

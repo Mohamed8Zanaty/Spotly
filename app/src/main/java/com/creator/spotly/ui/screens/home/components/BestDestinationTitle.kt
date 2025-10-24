@@ -18,10 +18,12 @@ import com.creator.spotly.ui.theme.OrangeRed
 
 @Composable
 fun BestDestinationTitle(
-    viewAllClickHandler : () -> Unit
+    viewAllClickHandler: () -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 5.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -45,5 +47,5 @@ fun BestDestinationTitle(
 @Preview(showBackground = true)
 @Composable
 private fun BestDestinationTitlePreview() {
-    BestDestinationTitle() {}
+    BestDestinationTitle {}
 }
