@@ -190,7 +190,13 @@ fun PlacesScreen() {
         Place("The HSB Vortex", "Zero Point, Sylhet", 4.2, 681, R.drawable.mountain),
         Place("Hisma Desert", "Zero Point, Sylhet", 4.5, 977, R.drawable.waterfall)
     )
+    PlacesContent(places)
+}
 
+@Composable
+fun PlacesContent(
+    places: List<Place>
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -216,9 +222,8 @@ fun PlacesScreen() {
         }
     }
 }
-
 @Preview
 @Composable
-fun screenPreview() {
+fun PlacesPreview() {
     PlacesScreen()
 }

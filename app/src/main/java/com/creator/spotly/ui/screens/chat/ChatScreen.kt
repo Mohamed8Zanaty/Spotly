@@ -12,6 +12,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +29,9 @@ import com.creator.spotly.ui.screens.chat.components.TopBar
 
 
 @Composable
-fun ChatScreen() {
+fun ChatScreen(
+
+) {
     val messages = listOf(
         Message("Hello!", "9:24", true, isSeen = true),
         Message(
@@ -38,7 +44,29 @@ fun ChatScreen() {
         Message("We are arriving today at 01:45, will someone be at home?", "9:37", false, true),
         Message("I will be at home", "9:39", true, isSeen = true)
     )
+    var message by remember { mutableStateOf("") }
+    ChatContent(
+        messages,
+        message,
+        onSendMessage = { },
+        onVoiceMessage = { },
+        onAttachFile = { },
+        onMessageChange = { message = it },
+        clearMessage = { message = "" }
+    )
 
+}
+
+@Composable
+fun ChatContent(
+    messages: List<Message>,
+    message: String,
+    onSendMessage: (String) -> Unit = { },
+    onVoiceMessage: () -> Unit = { },
+    onAttachFile: () -> Unit = { },
+    onMessageChange: (String) -> Unit = { },
+    clearMessage: () -> Unit = { }
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,7 +100,14 @@ fun ChatScreen() {
             }
         }
 
-        ChatInputBar()
+        ChatInputBar(
+            message = message,
+            onSendMessage = onSendMessage,
+            onVoiceMessage = onVoiceMessage,
+            onAttachFile = onAttachFile,
+            onMessageChange = onMessageChange,
+            clearMessage = clearMessage
+        )
     }
 }
 

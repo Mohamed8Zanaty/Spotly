@@ -1,6 +1,7 @@
 package com.creator.spotly.ui.screens.chat.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,9 +33,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ChatInputBar() {
-
-    var message by remember { mutableStateOf("") }
+fun ChatInputBar(
+    message: String,
+    onSendMessage: (String) -> Unit = { },
+    onVoiceMessage: () -> Unit = { },
+    onAttachFile: () -> Unit = { },
+    onMessageChange: (String) -> Unit = {  },
+    clearMessage: () -> Unit = {  }
+) {
 
     Row(
         modifier = Modifier
@@ -46,7 +54,7 @@ fun ChatInputBar() {
 
         TextField(
             value = message,
-            onValueChange = { message = it },
+            onValueChange = onMessageChange,
             placeholder = {
                 Text(
                     "Type your message",
@@ -57,7 +65,8 @@ fun ChatInputBar() {
                 Icon(
                     imageVector = Icons.Default.AttachFile,
                     contentDescription = "Attach",
-                    tint = Color.Gray
+                    tint = Color.Gray,
+                    modifier = Modifier.clickable { onAttachFile() }
                 )
             },
             shape = RoundedCornerShape(24.dp),
@@ -74,14 +83,21 @@ fun ChatInputBar() {
         )
 
         IconButton(
-            onClick = { },
+            onClick = {
+                if (message.isNotEmpty()) {
+                    onSendMessage(message)
+                    clearMessage
+                } else {
+                    onVoiceMessage
+                }
+            },
             modifier = Modifier
                 .padding(start = 8.dp)
                 .size(52.dp)
                 .background(Color(0xFFFF6A00), CircleShape)
         ) {
             Icon(
-                imageVector = Icons.Default.Mic,
+                imageVector = if(message.isEmpty()) Icons.Default.Mic else Icons.AutoMirrored.Filled.Send,
                 contentDescription = "Voice Message",
                 tint = Color.White,
                 modifier = Modifier.size(26.dp)
@@ -93,5 +109,5 @@ fun ChatInputBar() {
 @Preview
 @Composable
 private fun ChatInputBarPreview() {
-    ChatInputBar()
+    ChatInputBar("")
 }

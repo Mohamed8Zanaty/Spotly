@@ -34,12 +34,14 @@ fun HomeScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onPlaceClick: (String) -> Unit = {},
     onNotificationsButtonClick: () -> Unit = {},
+    onProfileButtonClick: () -> Unit = {},
 ) {
     HomeContent(
         modifier = modifier,
         contentPadding = contentPadding,
         onPlaceClick = onPlaceClick,
-        onNotificationsButtonClick = onNotificationsButtonClick
+        onNotificationsButtonClick = onNotificationsButtonClick,
+        onProfileButtonClick = onProfileButtonClick,
     )
 }
 
@@ -49,6 +51,7 @@ fun HomeContent(
     contentPadding: PaddingValues = PaddingValues(16.dp),
     onPlaceClick: (placeId: String) -> Unit = {},
     onNotificationsButtonClick: () -> Unit = {},
+    onProfileButtonClick: () -> Unit = {},
     ) {
         Column(
             modifier = modifier
@@ -57,8 +60,9 @@ fun HomeContent(
                 .padding(horizontal = 12.dp)
         ) {
             TopBarSection(
-                notificationsIconHandler = onNotificationsButtonClick
-            ) { }
+                notificationsIconHandler = onNotificationsButtonClick,
+                profileButtonHandler = onProfileButtonClick,
+            )
             Spacer(Modifier.height(5.dp))
             TitleSection(
                 "Discover the wonders of the ",

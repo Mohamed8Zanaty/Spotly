@@ -27,7 +27,7 @@ import com.creator.spotly.ui.components.CustomIconButton
 @Composable
 fun TopBarSection(
     notificationsIconHandler: () -> Unit,
-    profileIconHandler: () -> Unit,
+    profileButtonHandler: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -44,7 +44,7 @@ fun TopBarSection(
         )
 
         Button(
-            onClick = profileIconHandler,
+            onClick = profileButtonHandler,
             shape = RoundedCornerShape(25.dp),
             modifier = Modifier.height(44.dp),
             colors = ButtonDefaults.buttonColors(
@@ -75,10 +75,10 @@ fun TopBarSection(
 
 @Preview(showBackground = true)
 @Composable
-private fun TopBArSectionPreview() {
+private fun TopBarSectionPreview() {
     TopBarSection(
         notificationsIconHandler = {},
-        profileIconHandler = {},
+        profileButtonHandler = {},
 
         )
 }

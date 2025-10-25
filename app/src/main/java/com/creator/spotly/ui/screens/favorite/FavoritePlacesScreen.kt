@@ -22,29 +22,29 @@ import com.creator.spotly.ui.screens.favorite.component.FavoriteTopBar
 
 @Composable
 fun FavoritePlacesScreen(places: List<Place>, onBackClick: () -> Unit) {
-    Scaffold(
-        containerColor = Color.White,
-        topBar = { FavoriteTopBar(onBackClick) },
-        contentWindowInsets = WindowInsets.safeDrawing,
-    ) { paddingValues
-        ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Favorite Places",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-            )
+    FavoritePlacesContent(places = places, onBackClick = onBackClick)
+}
 
-            Spacer(modifier = Modifier.height(16.dp))
+@Composable
+fun FavoritePlacesContent(
+    places : List<Place>,
+    onBackClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Favorite Places",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+        )
 
-            FavoritePlacesGrid(places)
-        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        FavoritePlacesGrid(places)
     }
 }
 

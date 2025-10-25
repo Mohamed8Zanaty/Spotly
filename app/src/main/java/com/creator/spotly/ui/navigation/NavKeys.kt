@@ -13,16 +13,16 @@ data object LoginScreen : NavKey
 //data object PopularPlacesScreen : NavKey
 @Serializable
 data object NotificationScreen : NavKey
-//@Serializable
-//data object ProfileScreen : NavKey
+@Serializable
+data object ProfileScreen : NavKey
 //@Serializable
 //data object EditProfileScreen : NavKey
 @Serializable
 data object MessagesScreen : NavKey
 //@Serializable
 //data object ChatScreen : NavKey
-//@Serializable
-//data object DetailsScreen : NavKey
+@Serializable
+data object DetailsScreen : NavKey
 //@Serializable
 //data object FavoritesScreen : NavKey
 @Serializable

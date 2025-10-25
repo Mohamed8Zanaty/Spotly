@@ -41,15 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-class PopularPackagesScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            PopularPackages()
-        }
-    }
-}
 
 data class Data(
     val image: Int,
@@ -63,16 +54,28 @@ data class Data(
     val price: String
 )
 
+val trips = listOf(
+    Data(R.drawable.pic1, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per1,R.drawable.per2 ,R.drawable.per3,24, "$900"),
+    Data(R.drawable.pic2, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per4,R.drawable.per3 ,R.drawable.per5,24, "$900"),
+    Data(R.drawable.pic3, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per2,R.drawable.per5 ,R.drawable.per1,24, "$900"),
+    Data(R.drawable.pic4, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per3,R.drawable.per1 ,R.drawable.per2,24, "$900"),
+)
+
 @Composable
-fun PopularPackages() {
-    val trips = listOf(
-        Data(R.drawable.pic1, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per1,R.drawable.per2 ,R.drawable.per3,24, "$900"),
-        Data(R.drawable.pic2, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per4,R.drawable.per3 ,R.drawable.per5,24, "$900"),
-        Data(R.drawable.pic3, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per2,R.drawable.per5 ,R.drawable.per1,24, "$900"),
-        Data(R.drawable.pic4, "Niladri Reservoir", "16 July-28 July", 4.8, R.drawable.per3,R.drawable.per1 ,R.drawable.per2,24, "$900"),
-    )
+fun PopularPackagesScreen(
+    popularPackages: List<Data> = trips
+) {
 
 
+    PopularPackagesContent(trips = trips)
+
+
+}
+
+@Composable
+fun PopularPackagesContent(
+    trips: List<Data>
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +108,6 @@ fun PopularPackages() {
             }
         }
     }
-
 }
 
 @Composable
@@ -113,7 +115,7 @@ fun Cards (data : Data) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {  },
+            .clickable { },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(2.dp)
@@ -127,7 +129,7 @@ fun Cards (data : Data) {
                 modifier = Modifier
                     .size(height = 160.dp, width = 140.dp)
                     .padding(14.dp)
-                    .clip(RoundedCornerShape (16.dp))
+                    .clip(RoundedCornerShape(16.dp))
             )
             Column {
                 Row {
@@ -210,5 +212,5 @@ fun Cards (data : Data) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewPopularPackages() {
-    PopularPackages()
+    PopularPackagesScreen()
 }

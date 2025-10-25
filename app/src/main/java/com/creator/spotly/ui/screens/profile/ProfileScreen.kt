@@ -21,42 +21,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-class Profile : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ProfileScreen()
-        }
-    }
-}
-@Preview(showBackground = true, showSystemUi = true)
+import com.creator.spotly.ui.components.CustomIconButton
+import com.creator.spotly.ui.components.CustomTopbar
+import com.creator.spotly.ui.theme.OrangeRed
+
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onBackClick: () -> Unit = {  },
+    onEditClick: () -> Unit = {  }
+) {
+    ProfileContent(
+        onBackClick = onBackClick,
+        onEditClick = onEditClick
+    )
+}
+
+@Composable
+fun ProfileContent(
+    onBackClick: () -> Unit = {  },
+    onEditClick: () -> Unit = {  }
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .padding(20.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(modifier = Modifier.width(40.dp))
-            Text(
-                text = "Profile",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            IconButton(
-                modifier = Modifier
-                    .background(Color(0xFFF7F7F9), shape = CircleShape),
-                onClick = {  }
-            ) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit Profile", tint = Color(0xFFFF6421))
+        CustomTopbar(
+            title = "Profile",
+            backButtonHandler = onBackClick,
+            item = {
+                CustomIconButton(
+                    onClick = onEditClick,
+                    icon = Icons.Default.Edit,
+                    contentColor = OrangeRed,
+                )
             }
-        }
+        )
+
         Spacer(modifier = Modifier.height(24.dp))
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -124,7 +126,8 @@ fun ProfileScreen() {
         Spacer(modifier = Modifier.height(30.dp))
 
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .background(Color(0xFFF7F7F9), RoundedCornerShape(16.dp)),
 
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -143,7 +146,7 @@ fun ProfileScreen() {
                     modifier = Modifier
                         .padding(12.dp)
                         .weight(1f)
-                        .clickable {  }
+                        .clickable { }
                 )
                 Icon(
                     imageVector = Icons.Default.ArrowForwardIos,
@@ -173,7 +176,7 @@ fun ProfileScreen() {
                     modifier = Modifier
                         .padding(12.dp)
                         .weight(1f)
-                        .clickable {  }
+                        .clickable { }
                 )
                 Icon(
                     imageVector = Icons.Default.ArrowForwardIos,
@@ -233,7 +236,7 @@ fun ProfileScreen() {
                     modifier = Modifier
                         .padding(12.dp)
                         .weight(1f)
-                        .clickable {  }
+                        .clickable { }
                 )
                 Icon(
                     imageVector = Icons.Default.ArrowForwardIos,
@@ -276,4 +279,10 @@ fun ProfileScreen() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun ProfileScreenPreview() {
+    ProfileScreen()
 }

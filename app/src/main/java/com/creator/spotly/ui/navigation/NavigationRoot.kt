@@ -1,5 +1,6 @@
 package com.creator.spotly.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,13 +20,16 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.creator.spotly.LoginScreen
+import com.creator.spotly.ProfileScreen
 import com.creator.spotly.ui.components.BottomNavBar
 import com.creator.spotly.ui.components.Tab
+import com.creator.spotly.ui.navigation.utils.backButtonHandler
 import com.creator.spotly.ui.screens.home.HomeScreen
 import com.creator.spotly.ui.screens.messages.MessagesScreen
 import com.creator.spotly.ui.screens.notifications.NotificationScreen
 import com.creator.spotly.ui.screens.search.SearchScreen
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
+import com.example.detailsscreen.DetailsScreen
 
 
 @Composable
@@ -48,7 +52,6 @@ fun NavigationRoot() {
 
         }
     }
-
 
 
     if(!isLoggedIn) {
@@ -76,15 +79,24 @@ fun NavigationRoot() {
         )
     } else {
         val currentStack = tabToStack(selectedTab)
+        val topKey = currentStack.lastOrNull()
+        val showBottomBar = when (topKey) {
+            is DetailsScreen -> false
+            is NotificationScreen -> false
+            else -> true
+        }
+
 
         Scaffold(
             bottomBar = {
-                BottomNavBar(
-                    selected = selectedTab,
-                    onTabSelected = { tab ->
-                        selectedTab = tab
-                    }
-                )
+                if (showBottomBar) {
+                    BottomNavBar(
+                        selected = selectedTab,
+                        onTabSelected = { tab ->
+                            selectedTab = tab
+                        }
+                    )
+                }
             }
         ) {
             innerPadding ->
@@ -102,22 +114,36 @@ fun NavigationRoot() {
                         is HomeScreen -> NavEntry(key = key) {
                             HomeScreen(
                                 contentPadding = innerPadding,
-                                onNotificationsButtonClick = { homeStack.add(NotificationScreen) }
+                                onNotificationsButtonClick = { homeStack.add(NotificationScreen) },
+                                onPlaceClick = { homeStack.add(DetailsScreen) },
+                                onProfileButtonClick = { homeStack.add(ProfileScreen) }
                             )
                         }
                         is SearchScreen -> NavEntry(key = key) {
                             SearchScreen(
-                                onBack = { currentStack.removeLastOrNull() },
+                                onBack = { backButtonHandler(currentStack) },
                             )
                         }
                         is MessagesScreen -> NavEntry(key = key) {
                             MessagesScreen(
-                                contentPadding = innerPadding
+                                contentPadding = innerPadding,
                             )
                         }
                         is NotificationScreen -> NavEntry(key = key) {
                             NotificationScreen(
-                                onBack = { currentStack.removeLastOrNull() },
+                                onBack = { backButtonHandler(currentStack) },
+                            )
+                        }
+                        is DetailsScreen -> NavEntry(key = key) {
+                            DetailsScreen(
+                                onBack = {
+                                    backButtonHandler(currentStack)
+                                         },
+                            )
+                        }
+                        is ProfileScreen -> NavEntry(key = key) {
+                            ProfileScreen(
+                                onBackClick = { backButtonHandler(currentStack) },
                             )
                         }
                         else -> throw IllegalArgumentException("Invalid key: $key")
@@ -129,3 +155,4 @@ fun NavigationRoot() {
     }
 
 }
+

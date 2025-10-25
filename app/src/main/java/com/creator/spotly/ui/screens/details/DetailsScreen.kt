@@ -26,7 +26,21 @@ import com.creator.spotly.ui.screens.details.components.DetailsCard
 
 
 @Composable
-fun DetailsScreen() {
+fun DetailsScreen(
+    onBack: () -> Unit = {}
+) {
+    DetailsContent(
+        onBackButtonClick = onBack,
+        onBookMarkButtonClick = { },
+    )
+}
+
+@Composable
+fun DetailsContent(
+    onBackButtonClick: () -> Unit = {},
+    onBookMarkButtonClick: () -> Unit = {},
+
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +59,7 @@ fun DetailsScreen() {
         *  Handle BookMark button ( Add it to favorite data of the user )
         * */
         CustomTopbar(
-            backButtonHandler = {},
+            backButtonHandler = onBackButtonClick,
             title = "Details",
             backContainerColor = Color.Transparent.copy(alpha = 0.4f),
             backContentColor = Color.White,

@@ -48,7 +48,31 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rememberMe by remember { mutableStateOf(false) }
+    LoginContent(
+        email = email,
+        onEmailValueChange = { email = it },
+        password = password,
+        onPasswordValueChange = { password = it },
+        rememberMe = rememberMe,
+        onRememberMeChanged = { rememberMe = it },
+        onLoginClick = {
+            onLoginClick()
+        }
+    )
 
+
+}
+
+@Composable
+fun LoginContent(
+    email: String,
+    onEmailValueChange: (String) -> Unit,
+    password: String,
+    onPasswordValueChange: (String) -> Unit,
+    rememberMe: Boolean,
+    onRememberMeChanged: (Boolean) -> Unit,
+    onLoginClick: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,7 +118,7 @@ fun LoginScreen(
             )
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = onEmailValueChange,
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Filled.Email, contentDescription = null) },
                 modifier = Modifier.fillMaxWidth()
@@ -104,7 +128,7 @@ fun LoginScreen(
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = onPasswordValueChange,
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null) },
                 trailingIcon = {
@@ -126,7 +150,7 @@ fun LoginScreen(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
                         checked = rememberMe,
-                        onCheckedChange = { rememberMe = it }
+                        onCheckedChange = onRememberMeChanged,
                     )
                     Text(text = "Remember Me")
                 }

@@ -2,6 +2,7 @@ package com.creator.spotly.ui.screens.home.components
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,12 +58,13 @@ fun TravelCard(
     item: TravelItem,
     modifier: Modifier = Modifier,
     avatarSize: Dp = 28.dp,
-    onClick: (TravelItem) -> Unit = {}
+    onClick: (String) -> Unit = {}
 ) {
     Card(
         modifier = modifier
             .width(200.dp)
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable { onClick(item.id) },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
@@ -71,6 +73,7 @@ fun TravelCard(
                 modifier = Modifier
                     .height(260.dp)
                     .fillMaxWidth()
+
             ) {
 
                 AsyncImage(
@@ -171,7 +174,7 @@ fun TravelCardRow(
                 item = item,
                 modifier = Modifier
                     .padding(vertical = 4.dp),
-                onClick = { onItemClick(item.id) }
+                onClick = onItemClick
             )
         }
     }
