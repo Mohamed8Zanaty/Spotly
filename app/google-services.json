@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1059548853853",
+    "project_id": "spotly2025",
+    "storage_bucket": "spotly2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059548853853:android:53580052129b99342a7fb4",
+        "android_client_info": {
+          "package_name": "com.creator.spotly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWAV4NSroYZKDCRfZ7zZvR9ONz4yjTv4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
