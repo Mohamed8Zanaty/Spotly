@@ -32,7 +32,7 @@ private fun FavoritePlacesGridPreview() {
     val places = List(5) {
         Place(
             name = "Zanaty",
-            location = "El-marg",
+            address = "El-marg",
             imageUrl = "blabla"
         )
     }

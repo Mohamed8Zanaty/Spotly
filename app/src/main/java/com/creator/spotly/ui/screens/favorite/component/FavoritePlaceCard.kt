@@ -91,7 +91,7 @@ fun FavoritePlaceCard(place: Place) {
                     modifier = Modifier.size(14.dp),
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = place.location, color = Color.Gray, fontSize = 13.sp)
+                Text(text = place.address, color = Color.Gray, fontSize = 13.sp)
             }
         }
     }
@@ -102,7 +102,7 @@ fun FavoritePlaceCard(place: Place) {
 private fun FavoritePlaceCardPreview() {
     val place = Place(
         name = "Zanaty",
-        location = "El-marg",
+        address = "El-marg",
         imageUrl = "blabla"
     )
     FavoritePlaceCard(place)

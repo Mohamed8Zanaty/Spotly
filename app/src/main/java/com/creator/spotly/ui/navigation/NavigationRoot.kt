@@ -28,6 +28,7 @@ import com.creator.spotly.ui.screens.home.HomeScreen
 import com.creator.spotly.ui.screens.messages.MessagesScreen
 import com.creator.spotly.ui.screens.notifications.NotificationScreen
 import com.creator.spotly.ui.screens.search.SearchScreen
+import com.creator.spotly.ui.screens.signup.SignUpScreen
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
 import com.example.detailsscreen.DetailsScreen
 
@@ -70,7 +71,13 @@ fun NavigationRoot() {
                     }
                     is LoginScreen -> NavEntry(key = key) {
                         LoginScreen(
-                            onLoginClick = { isLoggedIn = true }
+                            onLoginClick = { isLoggedIn = true },
+                            onSignUpClick = { authBackstack.add(SignUpScreen) }
+                        )
+                    }
+                    is SignUpScreen -> NavEntry(key = key) {
+                        SignUpScreen(
+                            onUserCreatedSuccess = { isLoggedIn = true }
                         )
                     }
                     else -> throw IllegalArgumentException("Invalid key: $key")

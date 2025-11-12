@@ -44,6 +44,7 @@ import com.creator.spotly.ui.components.Curve
 @Composable
 fun LoginScreen(
     onLoginClick: () -> Unit = {},
+    onSignUpClick: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -57,7 +58,10 @@ fun LoginScreen(
         onRememberMeChanged = { rememberMe = it },
         onLoginClick = {
             onLoginClick()
-        }
+        },
+        onSignUpClick = {
+            onSignUpClick()
+        },
     )
 
 
@@ -72,6 +76,7 @@ fun LoginContent(
     rememberMe: Boolean,
     onRememberMeChanged: (Boolean) -> Unit,
     onLoginClick: () -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -181,7 +186,9 @@ fun LoginContent(
                     "Sign up",
                     color = Color(0xFFFF5722),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.clickable { }
+                    modifier = Modifier.clickable {
+                        onSignUpClick()
+                    }
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.creator.spotly.ui.screens.signup
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
@@ -16,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -23,51 +26,65 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.creator.spotly.domain.auth.createUser
 import com.creator.spotly.ui.components.Curve
+import com.creator.spotly.ui.components.CustomTextField
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
 fun SignUpScreen(
-
+    onUserCreatedSuccess: () -> Unit = {}
 ) {
+
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    var name by remember { mutableStateOf("") }
 
     SignUpContent(
         email = email,
-        phone = phone,
         password = password,
         confirmPassword = confirmPassword,
+        name = name,
         passwordVisible = passwordVisible,
         confirmPasswordVisible = confirmPasswordVisible,
         onEmailChange = { email = it },
-        onPhoneChange = { phone = it },
         onPasswordChange = { password = it },
         onConfirmPasswordChange = { confirmPassword = it },
+        onNameChange = { name = it },
         onPasswordVisibilityChange = { passwordVisible = !passwordVisible },
-        onConfirmPasswordVisibilityChange = { confirmPasswordVisible = !confirmPasswordVisible }
+        onConfirmPasswordVisibilityChange = { confirmPasswordVisible = !confirmPasswordVisible },
+        onSignUp = {
+            createUser(name, email, password, favoritePlaces = emptyList()) { success, error ->
+                if(success) {
+                    onUserCreatedSuccess()
+                } else {
+                    // Show error
+                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     )
 }
 
 @Composable
 fun SignUpContent(
     email: String,
-    phone: String,
     password: String,
     confirmPassword: String,
+    name: String,
+    onNameChange: (String) -> Unit,
     passwordVisible: Boolean,
     confirmPasswordVisible: Boolean,
     onEmailChange: (String) -> Unit,
-    onPhoneChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onConfirmPasswordChange: (String) -> Unit,
     onPasswordVisibilityChange: () -> Unit,
-    onConfirmPasswordVisibilityChange: () -> Unit
+    onConfirmPasswordVisibilityChange: () -> Unit,
+    onSignUp: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -100,114 +117,47 @@ fun SignUpContent(
                     .width(58.dp)
                     .padding(bottom = 24.dp)
             )
-            Text(
-                text = "Email",
-                fontSize = 17.sp,
-                color = Color.Black
+            CustomTextField(
+                title = "Name",
+                value = name,
+                onValueChange = onNameChange,
+                icon = Icons.Default.Person,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
-            OutlinedTextField(
+
+            Spacer(modifier = Modifier.height(16.dp))
+            CustomTextField(
+                title = "Email",
                 value = email,
                 onValueChange = onEmailChange,
-                placeholder = { Text("l  demo@email.com", color = Color.Gray) },
-                leadingIcon = {
-                    Icon(
-                        Icons.Default.Email,
-                        contentDescription = null,
-                        tint = Color.Gray
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth(),
-//                .padding(vertical = 8.dp)
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.DarkGray
-                ),
-                singleLine = true
+                icon = Icons.Default.Email,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
-            Divider(color = Color.Gray, thickness = 1.dp)
+
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Phone Number",
-                fontSize = 17.sp,
-                color = Color.Black
-            )
-            OutlinedTextField(
-                value = phone,
-                onValueChange = onPhoneChange,
-                placeholder = { Text("l  +00 000-0000-000", color = Color.Gray) },
-                leadingIcon = {
-                    Icon(
-                        Icons.Default.Phone,
-                        contentDescription = null,
-                        tint = Color.Gray
-                    )
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.DarkGray
-                ),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-            )
-            Divider(color = Color.Gray, thickness = 1.dp)
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Password",
-                fontSize = 17.sp,
-                color = Color.Black
-            )
-            OutlinedTextField(
+            CustomTextField(
+                title = "Password",
                 value = password,
                 onValueChange = onPasswordChange,
-                placeholder = { Text("l  enter your password", color = Color.Gray) },
-                leadingIcon = {
-                    Icon(
-                        Icons.Default.Lock,
-                        contentDescription = null,
-                        tint = Color.Gray
-                    )
-                },
+                icon = Icons.Default.Lock,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     val icon =
                         if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
                     IconButton(onClick = onPasswordVisibilityChange) {
-                        Icon(icon, contentDescription = "Toggle Password Visibility")
+                        Icon(icon, contentDescription = "Toggle Confirm Password Visibility")
                     }
                 },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.DarkGray
-                ),
-                singleLine = true
             )
-            Divider(color = Color.Gray, thickness = 1.dp)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Confirm Password",
-                fontSize = 17.sp,
-                color = Color.Black
-            )
-            OutlinedTextField(
+            CustomTextField(
+                title = "Confirm Password",
                 value = confirmPassword,
                 onValueChange = onConfirmPasswordChange,
-                placeholder = { Text("l  confirm your password", color = Color.Gray) },
-                leadingIcon = {
-                    Icon(
-                        Icons.Default.Lock,
-                        contentDescription = null,
-                        tint = Color.Gray
-                    )
-                },
+                icon = Icons.Default.Lock,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     val icon =
                         if (confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
@@ -215,20 +165,10 @@ fun SignUpContent(
                         Icon(icon, contentDescription = "Toggle Confirm Password Visibility")
                     }
                 },
-                visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.DarkGray
-                ),
-                singleLine = true
             )
-            Divider(color = Color.Gray, thickness = 1.dp)
             Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = { },
+                onClick = onSignUp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -253,7 +193,7 @@ fun SignUpContent(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun SignUpPreview() {
     SignUpScreen()
