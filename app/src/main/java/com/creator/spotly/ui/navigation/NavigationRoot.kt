@@ -77,7 +77,8 @@ fun NavigationRoot() {
                     }
                     is SignUpScreen -> NavEntry(key = key) {
                         SignUpScreen(
-                            onUserCreatedSuccess = { isLoggedIn = true }
+                            onUserCreatedSuccess = { isLoggedIn = true },
+                            onLoginClick = { authBackstack.add(LoginScreen) }
                         )
                     }
                     else -> throw IllegalArgumentException("Invalid key: $key")

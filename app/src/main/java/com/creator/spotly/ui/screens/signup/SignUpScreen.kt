@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +34,8 @@ import com.creator.spotly.ui.components.CustomTextField
 
 @Composable
 fun SignUpScreen(
-    onUserCreatedSuccess: () -> Unit = {}
+    onUserCreatedSuccess: () -> Unit = {},
+    onLoginClick: () -> Unit = {}
 ) {
 
     val context = LocalContext.current
@@ -66,7 +68,8 @@ fun SignUpScreen(
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        },
+        onLoginClick = onLoginClick
     )
 }
 
@@ -84,7 +87,8 @@ fun SignUpContent(
     onConfirmPasswordChange: (String) -> Unit,
     onPasswordVisibilityChange: () -> Unit,
     onConfirmPasswordVisibilityChange: () -> Unit,
-    onSignUp: () -> Unit
+    onSignUp: () -> Unit,
+    onLoginClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -110,12 +114,12 @@ fun SignUpContent(
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
-            Divider(
-                color = Color(0xFFFF6421),
-                thickness = 3.dp,
+            HorizontalDivider(
                 modifier = Modifier
                     .width(58.dp)
-                    .padding(bottom = 24.dp)
+                    .padding(bottom = 24.dp),
+                thickness = 3.dp,
+                color = Color(0xFFFF6421)
             )
             CustomTextField(
                 title = "Name",
@@ -186,6 +190,7 @@ fun SignUpContent(
                     color = Color(0xFFFF6421),
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable {
+                        onLoginClick()
                     }
                 )
             }
