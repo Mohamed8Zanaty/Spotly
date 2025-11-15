@@ -12,7 +12,12 @@
           "package_name": "com.creator.spotly"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1059548853853-sg15aqlhnbp9s3dqnsmogoi5sbg1ethm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAWAV4NSroYZKDCRfZ7zZvR9ONz4yjTv4c"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059548853853-sg15aqlhnbp9s3dqnsmogoi5sbg1ethm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
