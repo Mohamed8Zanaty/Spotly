@@ -1,9 +1,10 @@
 package com.creator.spotly.di
 
-import com.creator.spotly.data.repository.AuthRepository
-import com.creator.spotly.data.repository.DefaultAuthRepository
+import com.creator.spotly.domain.repository.AuthRepository
+import com.creator.spotly.data.repository.AuthRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,16 +17,18 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-
     @Provides
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
     @Provides
     @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    @Singleton
     fun provideAuthRepository(
         auth: FirebaseAuth,
         firestore: FirebaseFirestore
-    ): AuthRepository = DefaultAuthRepository(auth, firestore)
-
+    ): AuthRepository = AuthRepositoryImpl(auth, firestore)
 }

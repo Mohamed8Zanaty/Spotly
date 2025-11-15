@@ -1,15 +1,21 @@
 package com.creator.spotly.data.repository
 
+import com.creator.spotly.data.dto.UserHomeData
 import com.creator.spotly.domain.model.User
+import com.creator.spotly.domain.repository.AuthRepository
 import com.creator.spotly.ui.auth.FieldErrors
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-class DefaultAuthRepository(
+class AuthRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : AuthRepository {
@@ -28,7 +34,8 @@ class DefaultAuthRepository(
                 "name" to name,
                 "email" to email.trim(),
                 "created_at" to System.currentTimeMillis(),
-                "favoritePlaces" to emptyList<String>()
+                "favoritePlaces" to emptyList<String>(),
+
             )
 
             firestore.collection("users").document(uid).set(userMap).await()
@@ -64,22 +71,7 @@ class DefaultAuthRepository(
     override fun logOut() {
         auth.signOut()
     }
-
     override fun currentUserId(): String? = auth.currentUser?.uid
-
-    override suspend fun getUser(uid: String): Result<User> {
-        return try {
-            val snap = firestore.collection("users").document(uid).get().await()
-            if (!snap.exists()) return Result.failure(Exception("User not found"))
-            val user = snap.toObject(User::class.java)
-                ?: return Result.failure(Exception("Failed to parse user"))
-            Result.success(user)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-
     override suspend fun addFavoritePlace(
         uid: String,
         placeId: String
@@ -103,5 +95,6 @@ class DefaultAuthRepository(
         } catch (e: Exception) {
             Result.failure(e)
         }
+
 
 }

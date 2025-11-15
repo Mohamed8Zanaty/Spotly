@@ -1,6 +1,5 @@
-package com.creator.spotly.ui.screens.signup
+package com.creator.spotly.ui.auth.signup
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,12 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.creator.spotly.ui.auth.AuthUiState
+import com.creator.spotly.ui.state.AuthUiState
 import com.creator.spotly.ui.auth.AuthViewModel
 import com.creator.spotly.ui.components.Curve
 import com.creator.spotly.ui.components.CustomTextField

@@ -1,7 +1,9 @@
-package com.creator.spotly.ui.screens.home.components
+package com.creator.spotly.ui.home.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -13,14 +15,16 @@ import com.creator.spotly.ui.theme.OrangeRed
 
 @Composable
 fun TitleSection(
+    modifier: Modifier = Modifier,
     text1: String,
     text2: String
 ) {
+
     val customText = buildAnnotatedString {
         withStyle(
             SpanStyle(
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 37.sp
+                fontSize = 38.sp
             )
         ) {
             append(text1)
@@ -28,7 +32,7 @@ fun TitleSection(
         withStyle(
             SpanStyle(
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 38.sp,
+                fontSize = 45.sp,
                 color = OrangeRed
             )
         ) {
@@ -36,6 +40,8 @@ fun TitleSection(
         }
     }
     Text(
+        modifier = modifier.fillMaxWidth(),
+        lineHeight = 50.sp,
         text = customText,
         fontFamily = CustomFontFamily,
 
@@ -46,7 +52,7 @@ fun TitleSection(
 @Composable
 private fun TitleSectionPreview() {
     TitleSection(
-        "Discover the wonders of the ",
-        "world!"
+        text1 = "Discover the wonders of the ",
+        text2 = "world!"
     )
 }

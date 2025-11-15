@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.profile.components
+package com.creator.spotly.ui.profile.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

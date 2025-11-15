@@ -1,4 +1,6 @@
-package com.creator.spotly.ui.auth
+package com.creator.spotly.ui.state
+
+import com.creator.spotly.ui.auth.FieldErrors
 
 sealed interface AuthUiState {
     object Idle : AuthUiState

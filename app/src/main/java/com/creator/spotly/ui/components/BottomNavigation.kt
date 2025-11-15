@@ -41,9 +41,9 @@ import com.creator.spotly.ui.theme.OrangeRed
 
 enum class Tab {
     HOME,
-    CALENDER,
+//    CALENDER,
     SEARCH,
-    MESSAGES,
+//    MESSAGES,
     PROFILE
 }
 
@@ -75,25 +75,25 @@ fun BottomNavBar(
             icon = Icons.Default.Home,
             text = "Home"
         )
-        CustomButton(
-            onClick = { onTabSelected(Tab.CALENDER) },
-            selected = selected,
-            targetSelected = Tab.CALENDER,
-            icon = Icons.Default.DateRange,
-            text = "Calender"
-        )
+//        CustomButton(
+//            onClick = { onTabSelected(Tab.CALENDER) },
+//            selected = selected,
+//            targetSelected = Tab.CALENDER,
+//            icon = Icons.Default.DateRange,
+//            text = "Calender"
+//        )
         FAB(
             onClick = { onTabSelected(Tab.SEARCH) },
            icon = Icons.Default.Search
 
         )
-        CustomButton(
-            onClick = { onTabSelected(Tab.MESSAGES) },
-            selected = selected,
-            targetSelected = Tab.MESSAGES,
-            icon = Icons.Default.MailOutline,
-            text = "Messages"
-        )
+//        CustomButton(
+//            onClick = { onTabSelected(Tab.MESSAGES) },
+//            selected = selected,
+//            targetSelected = Tab.MESSAGES,
+//            icon = Icons.Default.MailOutline,
+//            text = "Messages"
+//        )
         CustomButton(
             onClick = { onTabSelected(Tab.PROFILE) },
             selected = selected,

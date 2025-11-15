@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.home.components
+package com.creator.spotly.ui.home.components
 
 
 import androidx.compose.foundation.background
@@ -21,12 +21,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +44,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.creator.spotly.ui.theme.CustomFontFamily
+import com.creator.spotly.ui.theme.OrangeRed
 
 
 data class TravelItem(
@@ -58,7 +62,9 @@ fun TravelCard(
     item: TravelItem,
     modifier: Modifier = Modifier,
     avatarSize: Dp = 28.dp,
-    onClick: (String) -> Unit = {}
+    onClick: (String) -> Unit = {},
+    iconColor : Color = OrangeRed,
+    placeIconColor : Color = Color(0xff7D848D)
 ) {
     Card(
         modifier = modifier
@@ -75,7 +81,6 @@ fun TravelCard(
                     .fillMaxWidth()
 
             ) {
-
                 AsyncImage(
                     model = item.imageUrl,
                     contentDescription = item.title,
@@ -91,13 +96,15 @@ fun TravelCard(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(12.dp)
-                        .size(36.dp)
-                        .shadow(4.dp, CircleShape)
-                        .background(Color.Transparent, CircleShape)
+
+                        ,
+                    shape = CircleShape,
+
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Place,
-                        contentDescription = "Bookmark"
+                        imageVector = Icons.Default.BookmarkBorder,
+                        contentDescription = "Bookmark",
+                        tint = iconColor
                     )
                 }
             }
@@ -110,7 +117,8 @@ fun TravelCard(
                     Text(
                         text = item.title,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = CustomFontFamily,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f)
@@ -122,7 +130,8 @@ fun TravelCard(
                         Icon(
                             imageVector = Icons.Outlined.Star,
                             contentDescription = "rating",
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(18.dp),
+                            tint = Color(0xffFFD336)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
@@ -142,11 +151,15 @@ fun TravelCard(
                         Icon(
                             imageVector = Icons.Default.Place,
                             contentDescription = "location",
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(12.dp),
+                            tint = placeIconColor
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
+                            fontFamily = CustomFontFamily,
+                            fontSize = 14.sp,
                             text = item.location,
+                            color = placeIconColor
                         )
                     }
 

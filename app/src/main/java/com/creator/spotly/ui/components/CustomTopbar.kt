@@ -32,7 +32,7 @@ fun CustomTopbar(
     backContainerColor: Color = Color.LightGray.copy(alpha = 0.2f),
     backContentColor: Color = Color.Black,
     titleColor: Color = Color.Black,
-    titleFontSize: Int = 24
+    titleFontSize: Int = 20
 ) {
     Row(
         modifier = Modifier

@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.home.components
+package com.creator.spotly.ui.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -18,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +25,6 @@ import com.creator.spotly.ui.components.CustomIconButton
 
 @Composable
 fun TopBarSection(
-    notificationsIconHandler: () -> Unit,
     profileButtonHandler: () -> Unit,
     profileIcon: Int = R.drawable.user,
     name: String = "User Name",
@@ -37,15 +34,8 @@ fun TopBarSection(
             .fillMaxWidth()
             .padding(horizontal = 17.5.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.Center
     ) {
-        CustomIconButton(
-            onClick = notificationsIconHandler,
-            roundedValue = 25,
-            size = 44,
-            icon = R.drawable.notifications
-        )
-
         Button(
             onClick = profileButtonHandler,
             shape = RoundedCornerShape(25.dp),
@@ -59,7 +49,8 @@ fun TopBarSection(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 10.dp)
+                ,
 
             ) {
                 // we should change this to viewmodel
@@ -81,8 +72,6 @@ fun TopBarSection(
 @Composable
 private fun TopBarSectionPreview() {
     TopBarSection(
-        notificationsIconHandler = {},
         profileButtonHandler = {},
-
         )
 }

@@ -1,4 +1,4 @@
-package com.creator.spotly.ui.screens.home
+package com.creator.spotly.ui.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,13 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.creator.spotly.data.dto.UserHomeData
 import com.creator.spotly.domain.model.User
 import com.creator.spotly.ui.auth.AuthViewModel
-import com.creator.spotly.ui.screens.home.components.BestDestinationTitle
-import com.creator.spotly.ui.screens.home.components.TitleSection
-import com.creator.spotly.ui.screens.home.components.TopBarSection
-import com.creator.spotly.ui.screens.home.components.TravelCardRow
-import com.creator.spotly.ui.screens.home.components.TravelItem
+import com.creator.spotly.ui.home.components.BestDestinationTitle
+import com.creator.spotly.ui.home.components.TitleSection
+import com.creator.spotly.ui.home.components.TopBarSection
+import com.creator.spotly.ui.home.components.TravelCardRow
+import com.creator.spotly.ui.home.components.TravelItem
 
 val sample = List(5) { i ->
     TravelItem(
@@ -36,33 +36,32 @@ val sample = List(5) { i ->
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onPlaceClick: (String) -> Unit = {},
-    onNotificationsButtonClick: () -> Unit = {},
     onProfileButtonClick: () -> Unit = {},
 
     ) {
-    val user by authViewModel.currentUser.collectAsState()
+    val userHomeData by homeViewModel.userHomeData.collectAsState()
+    val displayName = userHomeData?.name ?: "User"
+    val avatarUrl = userHomeData?.avatar
 
     HomeContent(
         modifier = modifier,
-        currentUser = user,
         contentPadding = contentPadding,
         onPlaceClick = onPlaceClick,
-        onNotificationsButtonClick = onNotificationsButtonClick,
         onProfileButtonClick = onProfileButtonClick,
+        name = displayName
     )
 }
 
 @Composable
 fun HomeContent(
     modifier: Modifier = Modifier,
-    currentUser: User? = null,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     onPlaceClick: (placeId: String) -> Unit = {},
-    onNotificationsButtonClick: () -> Unit = {},
     onProfileButtonClick: () -> Unit = {},
+    name : String? = null,
     ) {
         Column(
             modifier = modifier
@@ -71,14 +70,13 @@ fun HomeContent(
                 .padding(horizontal = 12.dp)
         ) {
             TopBarSection(
-                notificationsIconHandler = onNotificationsButtonClick,
                 profileButtonHandler = onProfileButtonClick,
-                name = currentUser?.name ?: "User"
+                name = name ?: "User"
             )
             Spacer(Modifier.height(5.dp))
             TitleSection(
-                "Discover the wonders of the ",
-                "world!"
+                text1 = "Discover the wonders of the ",
+                text2 = "world!"
             )
             Spacer(Modifier.height(12.dp))
             BestDestinationTitle { }

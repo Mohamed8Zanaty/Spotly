@@ -24,7 +24,6 @@ import com.creator.spotly.ui.screens.favorite.component.FavoriteTopBar
 fun FavoritePlacesScreen(places: List<Place>, onBackClick: () -> Unit) {
     FavoritePlacesContent(places = places, onBackClick = onBackClick)
 }
-
 @Composable
 fun FavoritePlacesContent(
     places : List<Place>,

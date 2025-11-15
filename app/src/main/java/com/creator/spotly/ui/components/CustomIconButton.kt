@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.creator.spotly.ui.theme.BUTTON_SIZE
+import com.creator.spotly.ui.theme.ButtonContainer
 import com.creator.spotly.ui.theme.ROUNDED_BUTTON_VALUE
 
 @Composable
@@ -26,8 +27,9 @@ fun CustomIconButton(
     icon: ImageVector,
     roundedValue: Int = ROUNDED_BUTTON_VALUE,
     buttonSize: Int = BUTTON_SIZE,
-    containerColor: Color = Color.LightGray.copy(alpha = 0.2f),
-    contentColor: Color = Color.Black
+    containerColor: Color = ButtonContainer,
+    contentColor: Color = Color.Black,
+    iconSize: Int = 18
 ) {
     Button(
         onClick = onClick,
@@ -42,7 +44,7 @@ fun CustomIconButton(
         Icon(
             icon,
             contentDescription = null,
-            modifier = Modifier.size(24.dp).align(Alignment.CenterVertically),
+            modifier = Modifier.size(iconSize.dp).align(Alignment.CenterVertically),
 
         )
     }

@@ -1,20 +1,18 @@
 package com.creator.spotly
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,19 +22,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.creator.spotly.data.dto.UserProfileData
 import com.creator.spotly.ui.components.CustomIconButton
 import com.creator.spotly.ui.components.CustomTopbar
-import com.creator.spotly.ui.screens.profile.components.OptionRow
+import com.creator.spotly.ui.profile.ProfileViewModel
+import com.creator.spotly.ui.profile.components.OptionRow
+import com.creator.spotly.ui.theme.ButtonContainer
 import com.creator.spotly.ui.theme.OrangeRed
 
 @Composable
 fun ProfileScreen(
-
+    modifier: Modifier = Modifier,
+    profileViewModel: ProfileViewModel = hiltViewModel(),
     onBackClick: () -> Unit = {  },
     onEditClick: () -> Unit = {  },
-    onLogoutClick: () -> Unit = {  }
-) {
+    onLogoutClick: () -> Unit = {  },
+
+    ) {
+    val profile by profileViewModel.profile.collectAsState()
     ProfileContent(
+        userProfile = profile,
         onBackClick = onBackClick,
         onEditClick = onEditClick,
         onLogoutClick = onLogoutClick
@@ -45,6 +52,7 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileContent(
+    userProfile: UserProfileData? = null,
     onBackClick: () -> Unit = {  },
     onEditClick: () -> Unit = {  },
     onLogoutClick: () -> Unit = { }
@@ -60,10 +68,12 @@ fun ProfileContent(
             item = {
                 CustomIconButton(
                     onClick = onEditClick,
-                    icon = Icons.Default.Edit,
+                    icon = Icons.Outlined.Edit,
                     contentColor = OrangeRed,
+
                 )
-            }
+            },
+            backContainerColor = ButtonContainer
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -72,12 +82,11 @@ fun ProfileContent(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.profile),
+                painter = painterResource(id = R.drawable.user),
                 contentDescription = "User Image",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape)
-                    .background(Color(0xFFFFDFE6))
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -85,8 +94,8 @@ fun ProfileContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Reyna Mohamed", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Text("Ellaithy@email.com", color = Color.Gray, fontSize = 14.sp)
+            Text(userProfile?.name ?: "Unknown", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(userProfile?.email ?: "Unknown", color = Color.Gray, fontSize = 14.sp)
         }
         Spacer(modifier = Modifier.height(24.dp))
         Row(
@@ -100,8 +109,8 @@ fun ProfileContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ){
-                Text("Reward Points", fontSize = 14.sp, color = Color.Black)
-                Text("50", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
+                Text("Rewards Points", fontSize = 14.sp, color = Color.Black)
+                Text(userProfile?.rewardPoints.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
             }
             Divider(
                 color = Color(0xFFE0E0E0),
@@ -114,7 +123,7 @@ fun ProfileContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Text("Travel Trips", fontSize = 14.sp, color = Color.Black)
-                Text("40", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
+                Text(userProfile?.travelTrips.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
             }
             Divider(
                 color = Color(0xFFE0E0E0),
@@ -127,7 +136,7 @@ fun ProfileContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Text("Bucket List", fontSize = 14.sp, color = Color.Black)
-                Text("200", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
+                Text(userProfile?.bucketListItems.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF6421))
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
@@ -142,16 +151,7 @@ fun ProfileContent(
             verticalArrangement = Arrangement.spacedBy(10.dp),
 
         ) {
-            OptionRow(
-                icon = Icons.Default.PersonOutline,
-                title = "My Profile",
-                onClick = {  }
-            )
-            Divider(
-                color = Color(0xFFE0E0E0),
-                thickness = 0.5.dp,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+
             OptionRow(
                 icon = Icons.Default.BookmarkBorder,
                 title = "Book Marks",
@@ -206,8 +206,23 @@ fun ProfileContent(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    val fakeUser = UserProfileData(
+        uid = "123",
+        name = "Reyna Mohamed",
+        email = "Ellaithy@email.com",
+        avatar = null,
+        rewardPoints = 50,
+        travelTrips = 40,
+        bucketListItems = 200
+    )
+
+    ProfileContent(
+        userProfile = fakeUser,
+        onBackClick = {},
+        onEditClick = {},
+        onLogoutClick = {}
+    )
 }

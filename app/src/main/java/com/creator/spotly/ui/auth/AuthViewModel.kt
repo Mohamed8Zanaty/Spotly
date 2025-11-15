@@ -3,10 +3,12 @@ package com.creator.spotly.ui.auth
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.creator.spotly.data.dto.UserHomeData
 import com.creator.spotly.data.repository.AuthException
-import com.creator.spotly.data.repository.AuthRepository
+import com.creator.spotly.domain.repository.AuthRepository
 import com.creator.spotly.domain.auth.PASSWORD_MIN_LENGTH
 import com.creator.spotly.domain.model.User
+import com.creator.spotly.ui.state.AuthUiState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,31 +22,12 @@ class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-
     private val _state = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val state: StateFlow<AuthUiState> = _state
-
     private val _uid = MutableStateFlow<String?>(firebaseAuth.currentUser?.uid)
     val uid: StateFlow<String?> = _uid.asStateFlow()
 
-    private val _currentUser = MutableStateFlow<User?>(null)
-    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
-
-    init {
-        firebaseAuth.currentUser?.uid?.let { loadUserData(it) }
-    }
-
-    private fun loadUserData(uid: String) {
-        viewModelScope.launch {
-            val result = repository.getUser(uid)
-            if (result.isSuccess) {
-                _currentUser.value = result.getOrNull()
-            } else {
-                _currentUser.value = null
-            }
-        }
-    }
     fun signUp(
         name: String,
         email: String,
@@ -131,6 +114,5 @@ class AuthViewModel @Inject constructor(
         if (password != confirmPassword) return "Passwords do not match"
         return null
     }
-
 }
 

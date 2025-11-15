@@ -8,6 +8,7 @@ data class User(
     var email: String = "",
     var password: String = "",
     var createdAt: Any? = null,
+    var avatar: String = "",
     var favoritePlaces : MutableList<Place> = mutableListOf()
 ) : Serializable
 

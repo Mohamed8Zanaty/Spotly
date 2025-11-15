@@ -25,11 +25,15 @@ import com.creator.spotly.ui.auth.AuthViewModel
 import com.creator.spotly.ui.components.BottomNavBar
 import com.creator.spotly.ui.components.Tab
 import com.creator.spotly.ui.navigation.utils.backButtonHandler
-import com.creator.spotly.ui.screens.home.HomeScreen
+import com.creator.spotly.ui.home.HomeScreen
 import com.creator.spotly.ui.screens.messages.MessagesScreen
 import com.creator.spotly.ui.screens.notifications.NotificationScreen
 import com.creator.spotly.ui.screens.search.SearchScreen
-import com.creator.spotly.ui.screens.signup.SignUpScreen
+import com.creator.spotly.ui.auth.signup.SignUpScreen
+import com.creator.spotly.ui.home.HomeViewModel
+import com.creator.spotly.ui.profile.EditProfileScreen
+import com.creator.spotly.ui.profile.EditProfileViewModel
+import com.creator.spotly.ui.profile.ProfileViewModel
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
 import com.example.detailsscreen.DetailsScreen
 
@@ -40,16 +44,22 @@ fun NavigationRoot() {
 
     val homeStack = rememberNavBackStack(HomeScreen)
     val searchStack = rememberNavBackStack(SearchScreen)
-    val messagesStack = rememberNavBackStack(MessagesScreen)
     val profileStack = rememberNavBackStack(ProfileScreen)
-
 
     // Hilt-provided AuthViewModel
     val authViewModel: AuthViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    val profileViewModel: ProfileViewModel = hiltViewModel()
+    val editProfileViewModel: EditProfileViewModel = hiltViewModel()
+
+
+
     val uid by authViewModel.uid.collectAsState()
 
     val isLoggedIn = uid != null
     var selectedTab by rememberSaveable { mutableStateOf(Tab.HOME) }
+
+
 
     LaunchedEffect(uid) {
         if (uid != null) {
@@ -62,8 +72,6 @@ fun NavigationRoot() {
             searchStack.clear()
             searchStack.add(SearchScreen)
 
-            messagesStack.clear()
-            messagesStack.add(MessagesScreen)
 
             profileStack.clear()
             profileStack.add(ProfileScreen)
@@ -75,7 +83,6 @@ fun NavigationRoot() {
         when (tab) {
             Tab.HOME -> homeStack
             Tab.SEARCH -> searchStack
-            Tab.MESSAGES -> messagesStack
             Tab.PROFILE -> profileStack
             else -> throw IllegalArgumentException("Invalid tab: $tab")
         }
@@ -116,7 +123,6 @@ fun NavigationRoot() {
         val topKey = currentStack.lastOrNull()
         val showBottomBar = when (topKey) {
             is DetailsScreen -> false
-            is NotificationScreen -> false
             else -> true
         }
 
@@ -145,9 +151,9 @@ fun NavigationRoot() {
                     when (key) {
                         is HomeScreen -> NavEntry(key = key) {
                             HomeScreen(
-                                authViewModel = authViewModel,
+                                homeViewModel = homeViewModel,
                                 contentPadding = innerPadding,
-                                onNotificationsButtonClick = { homeStack.add(NotificationScreen) },
+
                                 onPlaceClick = { homeStack.add(DetailsScreen) },
                                 onProfileButtonClick = { selectedTab = Tab.PROFILE }
                             )
@@ -155,24 +161,27 @@ fun NavigationRoot() {
                         is SearchScreen -> NavEntry(key = key) {
                             SearchScreen(onBack = { backButtonHandler(currentStack) })
                         }
-                        is MessagesScreen -> NavEntry(key = key) {
-                            MessagesScreen(contentPadding = innerPadding)
-                        }
-                        is NotificationScreen -> NavEntry(key = key) {
-                            NotificationScreen(onBack = { backButtonHandler(currentStack) })
-                        }
                         is DetailsScreen -> NavEntry(key = key) {
                             DetailsScreen(onBack = { backButtonHandler(currentStack) })
                         }
                         is ProfileScreen -> NavEntry(key = key) {
                             ProfileScreen(
+                                profileViewModel = profileViewModel,
                                 onBackClick = { backButtonHandler(currentStack) },
                                 onLogoutClick = {
                                     authViewModel.logOut()
                                     authBackstack.clear()
                                     selectedTab = Tab.HOME
                                     authBackstack.add(WelcomeScreen)
-                                }
+                                },
+                                onEditClick = { profileStack.add(EditProfileScreen) }
+                            )
+                        }
+                        is EditProfileScreen -> NavEntry(key = key) {
+                            EditProfileScreen(
+                                editViewModel = editProfileViewModel,
+                                onBackClick = { backButtonHandler(currentStack) },
+                                onDoneClick = { backButtonHandler(currentStack) }
                             )
                         }
                         else -> throw IllegalArgumentException("Invalid key: $key")
