@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 
@@ -94,5 +96,17 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
 
+    // Coroutines + Play Services await()
+    implementation(libs.kotlinx.coroutines.core) // match your Kotlin
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.play.services)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
 }

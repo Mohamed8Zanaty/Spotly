@@ -1,26 +1,27 @@
 package com.creator.spotly.ui.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+//import androidx.compose.runtime.rememberSaveable
 import androidx.compose.ui.Modifier
-
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
-
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.creator.spotly.LoginScreen
 import com.creator.spotly.ProfileScreen
+import com.creator.spotly.ui.auth.AuthViewModel
 import com.creator.spotly.ui.components.BottomNavBar
 import com.creator.spotly.ui.components.Tab
 import com.creator.spotly.ui.navigation.utils.backButtonHandler
@@ -32,30 +33,55 @@ import com.creator.spotly.ui.screens.signup.SignUpScreen
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
 import com.example.detailsscreen.DetailsScreen
 
-
 @Composable
 fun NavigationRoot() {
+    // welcome/login/signup backstack
     val authBackstack = rememberNavBackStack(WelcomeScreen)
 
     val homeStack = rememberNavBackStack(HomeScreen)
     val searchStack = rememberNavBackStack(SearchScreen)
     val messagesStack = rememberNavBackStack(MessagesScreen)
+    val profileStack = rememberNavBackStack(ProfileScreen)
 
-    var isLoggedIn by remember { mutableStateOf(false) }
+
+    // Hilt-provided AuthViewModel
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val uid by authViewModel.uid.collectAsState()
+
+    val isLoggedIn = uid != null
     var selectedTab by rememberSaveable { mutableStateOf(Tab.HOME) }
+
+    LaunchedEffect(uid) {
+        if (uid != null) {
+            while (authBackstack.lastOrNull() != null) {
+                authBackstack.removeLastOrNull()
+            }
+            homeStack.clear()
+            homeStack.add(HomeScreen)
+
+            searchStack.clear()
+            searchStack.add(SearchScreen)
+
+            messagesStack.clear()
+            messagesStack.add(MessagesScreen)
+
+            profileStack.clear()
+            profileStack.add(ProfileScreen)
+
+        }
+    }
 
     val tabToStack: (Tab) -> NavBackStack = { tab ->
         when (tab) {
             Tab.HOME -> homeStack
             Tab.SEARCH -> searchStack
             Tab.MESSAGES -> messagesStack
+            Tab.PROFILE -> profileStack
             else -> throw IllegalArgumentException("Invalid tab: $tab")
-
         }
     }
 
-
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
         NavDisplay(
             backStack = authBackstack,
             onBack = { authBackstack.removeLastOrNull() },
@@ -71,13 +97,14 @@ fun NavigationRoot() {
                     }
                     is LoginScreen -> NavEntry(key = key) {
                         LoginScreen(
-                            onLoginClick = { isLoggedIn = true },
-                            onSignUpClick = { authBackstack.add(SignUpScreen) }
+                            viewModel = authViewModel,
+                            onSignUpClick = { authBackstack.add(SignUpScreen) },
                         )
                     }
                     is SignUpScreen -> NavEntry(key = key) {
                         SignUpScreen(
-                            onUserCreatedSuccess = { isLoggedIn = true }
+                            viewModel = authViewModel,
+                            onLoginClick = { authBackstack.add(LoginScreen) },
                         )
                     }
                     else -> throw IllegalArgumentException("Invalid key: $key")
@@ -93,7 +120,6 @@ fun NavigationRoot() {
             else -> true
         }
 
-
         Scaffold(
             bottomBar = {
                 if (showBottomBar) {
@@ -105,8 +131,7 @@ fun NavigationRoot() {
                     )
                 }
             }
-        ) {
-            innerPadding ->
+        ) { innerPadding ->
             NavDisplay(
                 modifier = Modifier.padding(innerPadding),
                 backStack = currentStack,
@@ -117,49 +142,43 @@ fun NavigationRoot() {
                     rememberSceneSetupNavEntryDecorator()
                 ),
                 entryProvider = { key ->
-                    when(key) {
+                    when (key) {
                         is HomeScreen -> NavEntry(key = key) {
                             HomeScreen(
+                                authViewModel = authViewModel,
                                 contentPadding = innerPadding,
                                 onNotificationsButtonClick = { homeStack.add(NotificationScreen) },
                                 onPlaceClick = { homeStack.add(DetailsScreen) },
-                                onProfileButtonClick = { homeStack.add(ProfileScreen) }
+                                onProfileButtonClick = { selectedTab = Tab.PROFILE }
                             )
                         }
                         is SearchScreen -> NavEntry(key = key) {
-                            SearchScreen(
-                                onBack = { backButtonHandler(currentStack) },
-                            )
+                            SearchScreen(onBack = { backButtonHandler(currentStack) })
                         }
                         is MessagesScreen -> NavEntry(key = key) {
-                            MessagesScreen(
-                                contentPadding = innerPadding,
-                            )
+                            MessagesScreen(contentPadding = innerPadding)
                         }
                         is NotificationScreen -> NavEntry(key = key) {
-                            NotificationScreen(
-                                onBack = { backButtonHandler(currentStack) },
-                            )
+                            NotificationScreen(onBack = { backButtonHandler(currentStack) })
                         }
                         is DetailsScreen -> NavEntry(key = key) {
-                            DetailsScreen(
-                                onBack = {
-                                    backButtonHandler(currentStack)
-                                         },
-                            )
+                            DetailsScreen(onBack = { backButtonHandler(currentStack) })
                         }
                         is ProfileScreen -> NavEntry(key = key) {
                             ProfileScreen(
                                 onBackClick = { backButtonHandler(currentStack) },
+                                onLogoutClick = {
+                                    authViewModel.logOut()
+                                    authBackstack.clear()
+                                    selectedTab = Tab.HOME
+                                    authBackstack.add(WelcomeScreen)
+                                }
                             )
                         }
                         else -> throw IllegalArgumentException("Invalid key: $key")
                     }
                 }
             )
-
         }
     }
-
 }
-

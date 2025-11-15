@@ -8,9 +8,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.creator.spotly.domain.model.User
+import com.creator.spotly.ui.auth.AuthViewModel
 import com.creator.spotly.ui.screens.home.components.BestDestinationTitle
 import com.creator.spotly.ui.screens.home.components.TitleSection
 import com.creator.spotly.ui.screens.home.components.TopBarSection
@@ -31,13 +36,18 @@ val sample = List(5) { i ->
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onPlaceClick: (String) -> Unit = {},
     onNotificationsButtonClick: () -> Unit = {},
     onProfileButtonClick: () -> Unit = {},
-) {
+
+    ) {
+    val user by authViewModel.currentUser.collectAsState()
+
     HomeContent(
         modifier = modifier,
+        currentUser = user,
         contentPadding = contentPadding,
         onPlaceClick = onPlaceClick,
         onNotificationsButtonClick = onNotificationsButtonClick,
@@ -48,6 +58,7 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     modifier: Modifier = Modifier,
+    currentUser: User? = null,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     onPlaceClick: (placeId: String) -> Unit = {},
     onNotificationsButtonClick: () -> Unit = {},
@@ -62,6 +73,7 @@ fun HomeContent(
             TopBarSection(
                 notificationsIconHandler = onNotificationsButtonClick,
                 profileButtonHandler = onProfileButtonClick,
+                name = currentUser?.name ?: "User"
             )
             Spacer(Modifier.height(5.dp))
             TitleSection(

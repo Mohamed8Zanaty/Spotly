@@ -58,7 +58,7 @@ fun DetailsCard() {
             }
 
             Image(
-                painter = painterResource(id = R.drawable.avatar2), // replace
+                painter = painterResource(id = R.drawable.user), // replace
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)

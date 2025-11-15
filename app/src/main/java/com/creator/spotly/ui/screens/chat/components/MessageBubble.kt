@@ -44,7 +44,7 @@ fun MessageBubble(message: Message) {
     ) {
         if (!message.isFromUser && message.showAvatar) {
             Image(
-                painter = painterResource(id = R.drawable.av1),
+                painter = painterResource(id = R.drawable.avatar),
                 contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)

@@ -6,8 +6,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -23,28 +26,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.creator.spotly.ui.components.CustomIconButton
 import com.creator.spotly.ui.components.CustomTopbar
+import com.creator.spotly.ui.screens.profile.components.OptionRow
 import com.creator.spotly.ui.theme.OrangeRed
 
 @Composable
 fun ProfileScreen(
+
     onBackClick: () -> Unit = {  },
-    onEditClick: () -> Unit = {  }
+    onEditClick: () -> Unit = {  },
+    onLogoutClick: () -> Unit = {  }
 ) {
     ProfileContent(
         onBackClick = onBackClick,
-        onEditClick = onEditClick
+        onEditClick = onEditClick,
+        onLogoutClick = onLogoutClick
     )
 }
 
 @Composable
 fun ProfileContent(
     onBackClick: () -> Unit = {  },
-    onEditClick: () -> Unit = {  }
+    onEditClick: () -> Unit = {  },
+    onLogoutClick: () -> Unit = { }
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
             .padding(20.dp)
     ) {
         CustomTopbar(
@@ -128,155 +135,73 @@ fun ProfileContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFF7F7F9), RoundedCornerShape(16.dp)),
+                .padding(vertical = 16.dp)
+                .background(Color(0xFFF7F7F9), RoundedCornerShape(16.dp))
+                .verticalScroll(rememberScrollState()),
 
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+
         ) {
-            Row {
-                Icon(
-                    imageVector = Icons.Default.PersonOutline,
-                    contentDescription = "Profile",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Profile",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .weight(1f)
-                        .clickable { }
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Go",
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(16.dp)
-                )
-            }
+            OptionRow(
+                icon = Icons.Default.PersonOutline,
+                title = "My Profile",
+                onClick = {  }
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 0.5.dp,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Row {
-                Icon(
-                    imageVector = Icons.Default.BookmarkBorder,
-                    contentDescription = "Bookmarked",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Bookmarked",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .weight(1f)
-                        .clickable { }
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Go",
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(16.dp)
-                )
-            }
+            OptionRow(
+                icon = Icons.Default.BookmarkBorder,
+                title = "Book Marks",
+                onClick = {  }
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 0.5.dp,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Flight,
-                    contentDescription = "Previous Trips",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Previous Trips",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .weight(1f)
-                        .clickable { }
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Go",
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(16.dp)
-                )
-            }
+            OptionRow(
+                icon = Icons.Default.Flight,
+                title = "Previous Trips",
+                onClick = {  }
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 0.5.dp,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Settings",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .weight(1f)
-                        .clickable { }
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Go",
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(16.dp)
-                )
-            }
+            OptionRow(
+                icon = Icons.Default.Settings,
+                title = "Settings",
+                onClick = {  }
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 0.5.dp,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "Version Info",
-                    tint = Color.Gray,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Version 1.0.0",
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .weight(1f)
-                        .clickable { }
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = "Go",
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(16.dp)
-                )
-            }
+            OptionRow(
+                icon = Icons.Default.Info,
+                title = "Version Info",
+                onClick = {  }
+            )
+            Divider(
+                color = Color(0xFFE0E0E0),
+                thickness = 0.5.dp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            OptionRow(
+                icon = Icons.Default.Logout,
+                title = "Logout",
+                onClick = { onLogoutClick() }
+            )
+            Divider(
+                color = Color(0xFFE0E0E0),
+                thickness = 0.5.dp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
         }
     }
 }
