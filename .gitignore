@@ -21,3 +21,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/java/com/creator/spotly/data/remote/api/Key.kt
