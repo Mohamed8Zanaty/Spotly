@@ -1,16 +1,19 @@
 package com.creator.spotly.ui.components
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -30,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,19 +58,17 @@ fun BottomNavBar(
     onTabSelected: (Tab) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    Box(
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(100.dp),
-        contentAlignment = Alignment.Center
-
-    ) {
-
-    Row(
-        Modifier.fillMaxWidth(),
+            .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
+            .padding(bottom = 16.dp)
+            .height(70.dp) // fixed height
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+        ,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceAround,
+
     ) {
         CustomButton(
             onClick = { onTabSelected(Tab.HOME) },
@@ -75,25 +77,12 @@ fun BottomNavBar(
             icon = Icons.Default.Home,
             text = "Home"
         )
-//        CustomButton(
-//            onClick = { onTabSelected(Tab.CALENDER) },
-//            selected = selected,
-//            targetSelected = Tab.CALENDER,
-//            icon = Icons.Default.DateRange,
-//            text = "Calender"
-//        )
+
         FAB(
             onClick = { onTabSelected(Tab.SEARCH) },
-           icon = Icons.Default.Search
-
+            icon = Icons.Default.Search
         )
-//        CustomButton(
-//            onClick = { onTabSelected(Tab.MESSAGES) },
-//            selected = selected,
-//            targetSelected = Tab.MESSAGES,
-//            icon = Icons.Default.MailOutline,
-//            text = "Messages"
-//        )
+
         CustomButton(
             onClick = { onTabSelected(Tab.PROFILE) },
             selected = selected,
@@ -102,10 +91,8 @@ fun BottomNavBar(
             text = "Profile"
         )
     }
-    }
+    Spacer(Modifier.height(8.dp)) // optional small spacing below
 }
-
-
 
 @Composable
 fun CustomButton(
@@ -118,31 +105,28 @@ fun CustomButton(
     Button(
         onClick = onClick,
         modifier = Modifier
-            .size(75.dp)
-
-        ,
+            .height(50.dp)
+            .width(60.dp),
         colors = ButtonDefaults.buttonColors(
-            contentColor = if(selected == targetSelected) OrangeRed else Color.LightGray,
-            containerColor = Color.Transparent
+            containerColor = Color.Transparent,
+            contentColor = if (selected == targetSelected) OrangeRed else Color.LightGray
         ),
-        contentPadding = PaddingValues(0.dp),
-
+        contentPadding = PaddingValues(0.dp)
     ) {
         Column(
-            Modifier
-                .fillMaxSize()
-                .padding(2.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Icon(
                 icon,
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(22.dp)
             )
+            Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text,
-                fontSize = 12.sp,
+                fontSize = 11.sp,
                 fontFamily = CustomFontFamily
             )
         }
@@ -156,19 +140,15 @@ fun FAB(
 ) {
     FloatingActionButton(
         onClick = onClick,
-        modifier = Modifier
-            .size(45.dp)
-        ,
+        modifier = Modifier.size(50.dp), // match better with bottom bar
         shape = RoundedCornerShape(50.dp),
         containerColor = OrangeRed,
         contentColor = Color.White
-
     ) {
         Icon(
             icon,
             contentDescription = null,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(26.dp)
         )
     }
 }
-

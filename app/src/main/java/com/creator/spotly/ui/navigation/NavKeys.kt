@@ -1,6 +1,7 @@
 package com.creator.spotly.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.creator.spotly.data.dto.PlaceItem
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,11 +22,15 @@ data object EditProfileScreen : NavKey
 //data object MessagesScreen : NavKey
 //@Serializable
 //data object ChatScreen : NavKey
-@Serializable
-data object DetailsScreen : NavKey
 //@Serializable
 //data object FavoritesScreen : NavKey
 @Serializable
 data object HomeScreen : NavKey
 @Serializable
 data object SearchScreen : NavKey
+@Serializable
+data class PlacesScreen(
+    val type: String,
+    val title: String,
+    val imageRes: Int? = null
+) : NavKey

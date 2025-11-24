@@ -1,5 +1,7 @@
 package com.creator.spotly.ui.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -11,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 //import androidx.compose.runtime.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
@@ -21,21 +24,22 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.creator.spotly.LoginScreen
 import com.creator.spotly.ProfileScreen
-import com.creator.spotly.ui.auth.AuthViewModel
+import com.creator.spotly.auth.viewmodel.AuthViewModel
 import com.creator.spotly.ui.components.BottomNavBar
 import com.creator.spotly.ui.components.Tab
 import com.creator.spotly.ui.navigation.utils.backButtonHandler
-import com.creator.spotly.ui.home.HomeScreen
-import com.creator.spotly.ui.screens.messages.MessagesScreen
-import com.creator.spotly.ui.screens.notifications.NotificationScreen
-import com.creator.spotly.ui.screens.search.SearchScreen
-import com.creator.spotly.ui.auth.signup.SignUpScreen
-import com.creator.spotly.ui.home.HomeViewModel
-import com.creator.spotly.ui.profile.EditProfileScreen
-import com.creator.spotly.ui.profile.EditProfileViewModel
-import com.creator.spotly.ui.profile.ProfileViewModel
+import com.creator.spotly.home.ui.HomeScreen
+import com.creator.spotly.search.SearchScreen
+import com.creator.spotly.auth.ui.signup.SignUpScreen
+import com.creator.spotly.home.viewmodel.CategoriesViewModel
+import com.creator.spotly.home.viewmodel.HomeViewModel
+import com.creator.spotly.placeslist.PlacesListViewModel
+import com.creator.spotly.profile.EditProfileScreen
+import com.creator.spotly.profile.EditProfileViewModel
+import com.creator.spotly.profile.ProfileViewModel
+import com.creator.spotly.placeslist.PlacesScreen
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
-import com.example.detailsscreen.DetailsScreen
+
 
 @Composable
 fun NavigationRoot() {
@@ -51,6 +55,8 @@ fun NavigationRoot() {
     val homeViewModel: HomeViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
     val editProfileViewModel: EditProfileViewModel = hiltViewModel()
+    val categoriesViewModel: CategoriesViewModel = hiltViewModel()
+    val placesListViewModel: PlacesListViewModel = hiltViewModel()
 
 
 
@@ -122,11 +128,13 @@ fun NavigationRoot() {
         val currentStack = tabToStack(selectedTab)
         val topKey = currentStack.lastOrNull()
         val showBottomBar = when (topKey) {
-            is DetailsScreen -> false
             else -> true
         }
 
         Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xffE7DEAF).copy(alpha = 0.5f)),
             bottomBar = {
                 if (showBottomBar) {
                     BottomNavBar(
@@ -153,16 +161,15 @@ fun NavigationRoot() {
                             HomeScreen(
                                 homeViewModel = homeViewModel,
                                 contentPadding = innerPadding,
-
-                                onPlaceClick = { homeStack.add(DetailsScreen) },
+                                categoriesViewModel = categoriesViewModel,
+                                onCategoryClick = {
+                                    homeStack.add(PlacesScreen(it.type, it.title, it.imageRes))
+                                },
                                 onProfileButtonClick = { selectedTab = Tab.PROFILE }
                             )
                         }
                         is SearchScreen -> NavEntry(key = key) {
                             SearchScreen(onBack = { backButtonHandler(currentStack) })
-                        }
-                        is DetailsScreen -> NavEntry(key = key) {
-                            DetailsScreen(onBack = { backButtonHandler(currentStack) })
                         }
                         is ProfileScreen -> NavEntry(key = key) {
                             ProfileScreen(
@@ -182,6 +189,16 @@ fun NavigationRoot() {
                                 editViewModel = editProfileViewModel,
                                 onBackClick = { backButtonHandler(currentStack) },
                                 onDoneClick = { backButtonHandler(currentStack) }
+                            )
+                        }
+                        is PlacesScreen -> NavEntry(key = key) {
+                            PlacesScreen(
+                                type = key.type,
+                                title = key.title,
+                                imageRes = key.imageRes,
+                                vm = placesListViewModel,
+                                onPlaceClick = {  },
+
                             )
                         }
                         else -> throw IllegalArgumentException("Invalid key: $key")

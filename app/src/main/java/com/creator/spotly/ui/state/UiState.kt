@@ -1,8 +1,8 @@
 package com.creator.spotly.ui.state
 
-sealed class UiState {
-    object Idle : UiState()
-    object Loading : UiState()
-    object Success : UiState()
-    data class Error(val message: String) : UiState()
+sealed class UiState<out T> {
+    object Idle : UiState<Nothing>()
+    object Loading : UiState<Nothing>()
+    data class Success<T>(val data: T) : UiState<T>()
+    data class Error(val message: String) : UiState<Nothing>()
 }

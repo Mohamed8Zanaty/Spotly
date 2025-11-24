@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.creator.spotly.ui.auth.AuthViewModel
-import com.creator.spotly.ui.auth.signup.SignUpScreen
+import com.creator.spotly.auth.viewmodel.AuthViewModel
+import com.creator.spotly.auth.ui.signup.SignUpScreen
 
 @Composable
 fun SimpleNavigationRoot() {

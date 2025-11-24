@@ -46,8 +46,8 @@ fun CustomTopbar(
         CustomIconButton(
             onClick = backButtonHandler,
             icon = Icons.Default.ArrowBackIosNew,
-            containerColor = backContainerColor,
-            contentColor = backContentColor
+
+
         )
         // Title
         Text(
@@ -55,7 +55,7 @@ fun CustomTopbar(
             fontWeight = FontWeight.SemiBold,
             fontSize = titleFontSize.sp,
             fontFamily = CustomFontFamily,
-            color = titleColor
+
         )
         item()
     }

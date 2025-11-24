@@ -21,6 +21,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val geoApiKey: String? = (project.findProperty("GEOAPIFY_KEY") as? String)
+            ?: System.getenv("GEOAPIFY_KEY") // optional: fallback to env var
+
+        buildConfigField("String", "GEOAPIFY_KEY", "\"${geoApiKey ?: ""}\"")
     }
 
     buildTypes {
@@ -38,9 +42,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -61,6 +67,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
+    implementation(libs.play.services.fitness)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -104,14 +112,26 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // coil
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(libs.coil.kt.coil.compose)
 
+    // api
+    implementation(libs.okhttp)
+    // Retrofit + Moshi
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // Update these to the latest versions available
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+// etc...
 
 }
