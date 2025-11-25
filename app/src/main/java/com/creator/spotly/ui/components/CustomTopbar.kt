@@ -40,7 +40,7 @@ fun CustomTopbar(
             .padding(top = TOPBAR_PADDING_TOP.dp)
         ,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         // Back Button
         CustomIconButton(
@@ -62,7 +62,7 @@ fun CustomTopbar(
 
 }
 
-@Preview(showBackground = true)
+ @Preview(showBackground = true)
 @Composable
 private fun CustomTopbarPreview() {
     CustomTopbar(
