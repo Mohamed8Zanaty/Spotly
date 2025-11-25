@@ -16,6 +16,15 @@ interface GeoapifyService {
         @Query("lang") lang: String? = null
     ): PlacesResponse
 
+    @GET("v1/geocode/search")
+    suspend fun searchPlaces(
+        @Query("text") text: String,
+        @Query("filter") filter: String? = null,
+        @Query("bias") bias: String? = null,
+        @Query("limit") limit: Int = 20,
+        @Query("lang") lang: String? = null
+    ): PlacesResponse
+
     @GET("v2/place-details")
     suspend fun getPlaceDetails(
         @Query("place_id") placeId: String,

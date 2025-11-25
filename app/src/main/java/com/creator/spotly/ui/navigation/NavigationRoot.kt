@@ -169,7 +169,7 @@ fun NavigationRoot() {
                             )
                         }
                         is SearchScreen -> NavEntry(key = key) {
-                            SearchScreen(onBack = { backButtonHandler(currentStack) })
+                            SearchScreen()
                         }
                         is ProfileScreen -> NavEntry(key = key) {
                             ProfileScreen(

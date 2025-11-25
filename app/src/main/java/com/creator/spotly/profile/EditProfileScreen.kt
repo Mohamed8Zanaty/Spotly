@@ -102,7 +102,7 @@ fun EditProfileContent(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.profile),
+                painter = painterResource(id = R.drawable.user),
                 contentDescription = "User Image",
                 modifier = Modifier
                     .size(100.dp)

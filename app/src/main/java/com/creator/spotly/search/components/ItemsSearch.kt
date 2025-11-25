@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
@@ -31,16 +32,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.creator.spotly.R
+import com.creator.spotly.data.dto.PlaceItem
 import com.creator.spotly.ui.theme.SpotlyTheme
 
 @Composable
-fun ItemSearch() {
+fun ItemsSearch(places: List<PlaceItem>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2), // 2 columns
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(8.dp)
     ) {
-        items(10) { index ->
+        items(places) { place ->
             Card(
                 modifier = Modifier
                     .padding(8.dp)
@@ -71,7 +73,7 @@ fun ItemSearch() {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Alexandria Library",
+                            text = place.name,
                             fontWeight = FontWeight.Bold
                         )
                         Row {
@@ -82,21 +84,10 @@ fun ItemSearch() {
                                 modifier = Modifier.size(20.dp)
                             )
                             Text(
-                                text = "Alexandria",
+                                text = place.address ?: "",
                                 color = Color.Gray
                             )
                         }
-                        Row {
-                            Text(
-                                text = "20$/",
-                                color = Color(0xffFF6421)
-                            )
-                            Text(
-                                text = "Person",
-                                color = Color.Gray
-                            )
-                        }
-
                     }
                 }
             }
@@ -108,6 +99,6 @@ fun ItemSearch() {
 @Composable
 fun PreviewMain() {
     SpotlyTheme {
-        ItemSearch()
+        ItemsSearch(places = emptyList())
     }
 }
