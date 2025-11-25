@@ -20,7 +20,7 @@ class PlacesRepositoryImpl @Inject constructor(
         return remote.fetchPlacesByProximity(categories, lat, lng, radiusMeters, limit)
     }
 
-    override suspend fun fetchPlaceDetails(id: String): Resource<PlaceDetailsUi> {
-        return remote.fetchPlaceDetails(id)
+    override suspend fun fetchPlaceDetails(placeId: String): Resource<PlaceDetailsUi> {
+        return remote.fetchPlaceDetails(placeId)
     }
 }

@@ -18,6 +18,59 @@ class RemoteDataSource @Inject constructor(
     private val service: GeoapifyService
 ) {
 
+    suspend fun searchPlacesByText(
+        text: String,
+        userLat: Double?,
+        userLng: Double?,
+        limit: Int = 20,
+        lang: String? = null
+    ): Resource<List<PlaceItem>> = withContext(Dispatchers.IO) {
+        try {
+            var bias: String? = null
+            if (userLat != null && userLng != null) {
+                if (userLat.isFinite() && userLng.isFinite() && userLat in -90.0..90.0 && userLng in -180.0..180.0) {
+                    bias = String.format(Locale.US, "proximity:%f,%f", userLng, userLat)
+                }
+            }
+
+            Log.d(
+                "GeoDebug",
+                "Calling searchPlaces text=$text bias=$bias limit=$limit"
+            )
+
+            val resp: PlacesResponse = service.searchPlaces(
+                text = text,
+                bias = bias,
+                limit = limit,
+                lang = lang
+            )
+
+            val items = resp.features.mapNotNull { it.toPlaceItem() }
+            Resource.Success(items)
+        } catch (ioEx: IOException) {
+            Log.e("GeoHttp", "Network error: ${ioEx.message}", ioEx)
+            Resource.Error("Network error: ${ioEx.message}", ioEx)
+        } catch (httpEx: HttpException) {
+            val code = httpEx.code()
+            val errBody = try {
+                httpEx.response()?.errorBody()?.string()
+            } catch (e: Exception) {
+                null
+            }
+            Log.e("GeoHttp", "HTTP $code -> $errBody", httpEx)
+            val message = buildString {
+                append("Server error $code")
+                if (!errBody.isNullOrBlank()) {
+                    append(": $errBody")
+                }
+            }
+            Resource.Error(message, httpEx)
+        } catch (ex: Exception) {
+            Log.e("GeoHttp", "Unexpected error: ${ex.message}", ex)
+            Resource.Error("Unexpected error: ${ex.message}", ex)
+        }
+    }
+
     suspend fun fetchPlacesByProximity(
         categories: String?,
         userLat: Double,
@@ -27,7 +80,6 @@ class RemoteDataSource @Inject constructor(
         lang: String? = null
     ): Resource<List<PlaceItem>> = withContext(Dispatchers.IO) {
         try {
-            // basic input validation
             if (!userLat.isFinite() || !userLng.isFinite()) {
                 return@withContext Resource.Error("Invalid coordinates")
             }
@@ -38,15 +90,14 @@ class RemoteDataSource @Inject constructor(
                 return@withContext Resource.Error("Coordinates out of range")
             }
 
-            // Build filter & bias using Locale.US to ensure dot decimal separator
-            val filter = String.Companion.format(
+            val filter = String.format(
                 Locale.US,
                 "circle:%f,%f,%d",
                 userLng,
                 userLat,
                 radiusMeters
             )
-            val bias = String.Companion.format(Locale.US, "proximity:%f,%f", userLng, userLat)
+            val bias = String.format(Locale.US, "proximity:%f,%f", userLng, userLat)
 
             Log.d(
                 "GeoDebug",
@@ -67,7 +118,6 @@ class RemoteDataSource @Inject constructor(
             Log.e("GeoHttp", "Network error: ${ioEx.message}", ioEx)
             Resource.Error("Network error: ${ioEx.message}", ioEx)
         } catch (httpEx: HttpException) {
-            // extract server error body — very useful for Geoapify (explains the 400)
             val code = httpEx.code()
             val errBody = try {
                 httpEx.response()?.errorBody()?.string()
