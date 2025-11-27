@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.creator.spotly.R
@@ -63,7 +62,7 @@ fun ItemsSearch(places: List<PlaceItem>) {
                     ) {
                         Image(
 
-                            painter = painterResource(id = R.drawable.pic4),
+                            painter = painterResource(id = R.drawable.alex),
                             contentScale = ContentScale.FillBounds,
                             contentDescription = "place photo",
                             modifier = Modifier
@@ -86,8 +85,7 @@ fun ItemsSearch(places: List<PlaceItem>) {
                             )
                             Text(
                                 text = place.address ?: "",
-                                color = Color.Gray,
-                                overflow = TextOverflow.Ellipsis,
+                                color = Color.Gray
                             )
                         }
                     }
