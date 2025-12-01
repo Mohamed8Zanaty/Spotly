@@ -30,7 +30,7 @@ fun WelcomeTextSection() {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Lorem ipsum dolor sit amet consectetur.\nLorem id sit",
+            text = "Explore the world with Spotly, the ultimate destination discovery app. ",
             fontSize = 14.sp,
             color = Color.Gray
         )

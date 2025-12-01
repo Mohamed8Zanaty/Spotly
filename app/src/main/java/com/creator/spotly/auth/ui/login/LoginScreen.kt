@@ -187,6 +187,7 @@ fun LoginContent(
             CustomTextField(
                 title = "Password",
                 value = password,
+                placeholder = "Enter Your Password",
                 onValueChange = onPasswordValueChange,
                 icon = Icons.Default.Lock,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

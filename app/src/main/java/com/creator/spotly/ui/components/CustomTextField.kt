@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CustomTextField(
     title: String = "Email",
+    placeholder: String = " demo@email.com",
     value: String = "",
     onValueChange: (String) -> Unit = {},
     icon : ImageVector = Icons.Default.Email,
@@ -39,7 +40,7 @@ fun CustomTextField(
         onValueChange = onValueChange,
         trailingIcon = trailingIcon,
         visualTransformation = visualTransformation,
-        placeholder = { Text("l  demo@email.com", color = Color.Gray) },
+        placeholder = { Text(placeholder, color = Color.Gray) },
         leadingIcon = {
             Icon(
                 icon,

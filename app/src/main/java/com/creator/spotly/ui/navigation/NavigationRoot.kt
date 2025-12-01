@@ -35,9 +35,9 @@ import com.creator.spotly.home.viewmodel.CategoriesViewModel
 import com.creator.spotly.home.viewmodel.HomeViewModel
 import com.creator.spotly.placeslist.PlacesListViewModel
 import com.creator.spotly.profile.EditProfileScreen
-import com.creator.spotly.profile.EditProfileViewModel
 import com.creator.spotly.profile.ProfileViewModel
 import com.creator.spotly.placeslist.PlacesScreen
+import com.creator.spotly.profile.EditProfileViewModel
 import com.creator.spotly.ui.screens.startup.WelcomeScreen
 
 
@@ -127,7 +127,7 @@ fun NavigationRoot() {
     } else {
         val currentStack = tabToStack(selectedTab)
         val topKey = currentStack.lastOrNull()
-        val showBottomBar = when (topKey) {
+        when (topKey) {
             else -> true
         }
 
@@ -136,14 +136,12 @@ fun NavigationRoot() {
                 .fillMaxSize()
                 .background(Color(0xffE7DEAF).copy(alpha = 0.5f)),
             bottomBar = {
-                if (showBottomBar) {
-                    BottomNavBar(
-                        selected = selectedTab,
-                        onTabSelected = { tab ->
-                            selectedTab = tab
-                        }
-                    )
-                }
+                BottomNavBar(
+                    selected = selectedTab,
+                    onTabSelected = { tab ->
+                        selectedTab = tab
+                    }
+                )
             }
         ) { innerPadding ->
             NavDisplay(
@@ -174,7 +172,7 @@ fun NavigationRoot() {
                         is ProfileScreen -> NavEntry(key = key) {
                             ProfileScreen(
                                 profileViewModel = profileViewModel,
-                                onBackClick = { backButtonHandler(currentStack) },
+                                onBackClick = { selectedTab = Tab.HOME },
                                 onLogoutClick = {
                                     authViewModel.logOut()
                                     authBackstack.clear()
@@ -195,6 +193,7 @@ fun NavigationRoot() {
                             PlacesScreen(
                                 type = key.type,
                                 title = key.title,
+                                onBackClick = { backButtonHandler(currentStack) },
                                 imageRes = key.imageRes,
                                 vm = placesListViewModel,
                                 onPlaceClick = {  },
