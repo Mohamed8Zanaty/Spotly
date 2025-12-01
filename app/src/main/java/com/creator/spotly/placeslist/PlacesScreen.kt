@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,6 +50,7 @@ fun PlacesScreen(
     type: String,
     title: String,
     imageRes: Int? = null,
+    onBackClick: () -> Unit = {},
     onPlaceClick: (PlaceItem) -> Unit,
     vm: PlacesListViewModel = hiltViewModel(),
 ) {
@@ -122,7 +124,7 @@ fun PlacesScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         CustomTopbar(
             title = title,
-            backButtonHandler = { /* TODO: navigate back */ }
+            backButtonHandler = { onBackClick() }
         )
         Spacer(Modifier.height(8.dp))
 
@@ -230,4 +232,17 @@ private fun requestLocationSafely(
         // Permission was revoked between check and call — report nulls and let UI re-request permission
         onResult(null, null)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PlacesScreenPreview() {
+    PlacesScreen(
+        type = "cafe",
+        title = "Cafes",
+        imageRes = R.drawable.cafe,
+        onPlaceClick = {},
+        // hiltViewModel() cannot be used in a @Preview, so we'd need a fake/mock ViewModel
+        // or we need to modify the original function to allow a nullable ViewModel.
+    )
 }

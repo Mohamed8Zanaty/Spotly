@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.tooling.preview.Preview
+import com.creator.spotly.ui.components.Curve
 
 @Composable
 fun Curve() {
@@ -34,5 +35,5 @@ fun Curve() {
 @Preview(showBackground = true)
 @Composable
 private fun CurvePreview() {
-    Curve()
+   Curve()
 }
