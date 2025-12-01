@@ -25,11 +25,6 @@ Spotly is an Android application designed to help users discover unique spots an
 
 > Spotly isn’t just a discovery tool it’s a personalized guide that combines exploration, convenience, and savings all in one app.
 
-<div align="center">
-  <h3>Home Page</h3>
-  <img src="home_page.jpg" alt="Splash Screen" width="30%">
-<br/>
-</div>
 
 
 
